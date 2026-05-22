@@ -1,1 +1,319 @@
-{"DIRETO|SÃO CAETANO DO SUL - 21-05 -  PORTAL PROPRIO DA PREF": {"key": "DIRETO|SÃO CAETANO DO SUL - 21-05 -  PORTAL PROPRIO DA PREF", "city": "São Caetano Do Sul", "portal": "OUTRO", "date": "2026-05-21", "status": "habilitacao", "valor": "", "objeto": "ALAMBRADO", "obs": "", "folder": "SÃO CAETANO DO SUL - 21-05 -  PORTAL PROPRIO DA PREF", "_local": false}, "BBMNET|ITAPEVI - 22-05": {"key": "BBMNET|ITAPEVI - 22-05", "city": "Itapevi", "portal": "BBMNET", "date": "2026-05-22", "status": "andamento", "objeto": "", "valor": "", "obs": "", "steps": [{"id": 1, "label": "Pesquisa de preços e viabilidade econômica", "done": true, "note": ""}, {"id": 2, "label": "Consulta de fornecedores e preço de custo", "done": true, "note": ""}, {"id": 3, "label": "Análise de margem de lucro", "done": true, "note": ""}, {"id": 4, "label": "Verificação de prazo e condições de entrega", "done": true, "note": ""}, {"id": 5, "label": "Avaliação do histórico de pagamento do órgão", "done": true, "note": ""}, {"id": 6, "label": "Análise da documentação necessária", "done": true, "note": ""}, {"id": 7, "label": "Planilha de preços calculada e finalizada", "done": true, "note": ""}, {"id": 8, "label": "Proposta inserida no portal", "done": true, "note": ""}], "pos_licitacao": {}, "folder": "ITAPEVI - 22-05", "category": "ativo"}, "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS": {"key": "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS", "city": "Valente", "portal": "PORTAL DE COMPRAS PUBLICAS", "date": "2026-05-26", "status": "andamento", "objeto": "", "valor": "", "obs": "", "steps": [{"id": 1, "label": "Pesquisa de preços e viabilidade econômica", "done": true, "note": ""}, {"id": 2, "label": "Consulta de fornecedores e preço de custo", "done": true, "note": ""}, {"id": 3, "label": "Análise de margem de lucro", "done": true, "note": ""}, {"id": 4, "label": "Verificação de prazo e condições de entrega", "done": true, "note": ""}, {"id": 5, "label": "Avaliação do histórico de pagamento do órgão", "done": false, "note": ""}, {"id": 6, "label": "Análise da documentação necessária", "done": false, "note": ""}, {"id": 7, "label": "Planilha de preços calculada e finalizada", "done": false, "note": ""}, {"id": 8, "label": "Proposta inserida no portal", "done": false, "note": ""}], "pos_licitacao": {}, "folder": "VALENTE- 26-05 COMPRAS PUBLICAS"}, "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05": {"key": "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05", "city": "Atibaia", "portal": "PORTAL DE COMPRAS PUBLICAS", "date": "2026-05-22", "status": "enviado", "objeto": "", "valor": "", "obs": "", "steps": [{"id": 1, "label": "Pesquisa de preços e viabilidade econômica", "done": true, "note": ""}, {"id": 2, "label": "Consulta de fornecedores e preço de custo", "done": true, "note": ""}, {"id": 3, "label": "Análise de margem de lucro", "done": true, "note": ""}, {"id": 4, "label": "Verificação de prazo e condições de entrega", "done": true, "note": ""}, {"id": 5, "label": "Avaliação do histórico de pagamento do órgão", "done": true, "note": ""}, {"id": 6, "label": "Análise da documentação necessária", "done": true, "note": ""}, {"id": 7, "label": "Planilha de preços calculada e finalizada", "done": true, "note": ""}, {"id": 8, "label": "Proposta inserida no portal", "done": true, "note": ""}], "pos_licitacao": {}, "folder": "ATIBAIA - 22-05"}, "BBMNET|INDAIATUBA - 03-06": {"key": "BBMNET|INDAIATUBA - 03-06", "city": "Indaiatuba", "portal": "BBMNET", "date": "2026-06-03", "status": "andamento", "objeto": "", "valor": "", "obs": "", "steps": [{"id": 1, "label": "Pesquisa de preços e viabilidade econômica", "done": true, "note": ""}, {"id": 2, "label": "Consulta de fornecedores e preço de custo", "done": true, "note": ""}, {"id": 3, "label": "Análise de margem de lucro", "done": true, "note": ""}, {"id": 4, "label": "Verificação de prazo e condições de entrega", "done": true, "note": ""}, {"id": 5, "label": "Avaliação do histórico de pagamento do órgão", "done": true, "note": ""}, {"id": 6, "label": "Análise da documentação necessária", "done": false, "note": ""}, {"id": 7, "label": "Planilha de preços calculada e finalizada", "done": true, "note": ""}, {"id": 8, "label": "Proposta inserida no portal", "done": false, "note": ""}], "pos_licitacao": {}, "folder": "INDAIATUBA - 03-06"}, "JA|IRAI - 18-05": {"key": "JA|IRAI - 18-05", "city": "Irai", "portal": "PORTAL DE COMPRAS PUBLICAS", "date": "2026-05-18", "status": "perdido", "valor": "", "objeto": "Mobiliário", "obs": "", "folder": "IRAI - 18-05", "_local": false}, "JA|SANTO ANTÓNIO DO MONTE - 20-05": {"key": "JA|SANTO ANTÓNIO DO MONTE - 20-05", "city": "Santo António Do Monte", "portal": "PORTAL DE COMPRAS PUBLICAS", "date": "2026-05-20", "status": "habilitacao", "valor": "", "objeto": "Informática", "obs": "", "folder": "SANTO ANTÓNIO DO MONTE - 20-05", "_local": false}, "BBMNET|CERQUEIRA CEZAR - 26-05 BBMNET": {"key": "BBMNET|CERQUEIRA CEZAR - 26-05 BBMNET", "city": "Cerqueira Cezar", "portal": "BBMNET", "date": "2026-05-26", "status": "andamento", "valor": "", "objeto": "", "obs": "", "folder": "CERQUEIRA CEZAR - 26-05 BBMNET", "_local": false}, "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO": {"key": "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO", "city": "Paracatu", "portal": "BBMNET", "date": "2026-05-15", "status": "republicar", "valor": "", "objeto": "Mobiliário", "obs": "hello", "folder": "PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO", "_local": false}}
+{
+  "DIRETO|SÃO CAETANO DO SUL - 21-05 -  PORTAL PROPRIO DA PREF": {
+    "key": "DIRETO|SÃO CAETANO DO SUL - 21-05 -  PORTAL PROPRIO DA PREF",
+    "city": "São Caetano Do Sul",
+    "portal": "OUTRO",
+    "date": "2026-05-21",
+    "status": "habilitacao",
+    "valor": "",
+    "objeto": "ALAMBRADO",
+    "obs": "",
+    "folder": "SÃO CAETANO DO SUL - 21-05 -  PORTAL PROPRIO DA PREF",
+    "_local": false
+  },
+  "BBMNET|ITAPEVI - 22-05": {
+    "key": "BBMNET|ITAPEVI - 22-05",
+    "city": "Itapevi",
+    "portal": "BBMNET",
+    "date": "2026-05-22",
+    "status": "andamento",
+    "objeto": "",
+    "valor": "",
+    "obs": "",
+    "steps": [
+      {
+        "id": 1,
+        "label": "Pesquisa de preços e viabilidade econômica",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 2,
+        "label": "Consulta de fornecedores e preço de custo",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 3,
+        "label": "Análise de margem de lucro",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 4,
+        "label": "Verificação de prazo e condições de entrega",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 5,
+        "label": "Avaliação do histórico de pagamento do órgão",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 6,
+        "label": "Análise da documentação necessária",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 7,
+        "label": "Planilha de preços calculada e finalizada",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 8,
+        "label": "Proposta inserida no portal",
+        "done": true,
+        "note": ""
+      }
+    ],
+    "pos_licitacao": {},
+    "folder": "ITAPEVI - 22-05",
+    "category": "ativo"
+  },
+  "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS": {
+    "key": "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS",
+    "city": "Valente",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2026-05-26",
+    "status": "andamento",
+    "objeto": "",
+    "valor": "",
+    "obs": "",
+    "steps": [
+      {
+        "id": 1,
+        "label": "Pesquisa de preços e viabilidade econômica",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 2,
+        "label": "Consulta de fornecedores e preço de custo",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 3,
+        "label": "Análise de margem de lucro",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 4,
+        "label": "Verificação de prazo e condições de entrega",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 5,
+        "label": "Avaliação do histórico de pagamento do órgão",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 6,
+        "label": "Análise da documentação necessária",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 7,
+        "label": "Planilha de preços calculada e finalizada",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 8,
+        "label": "Proposta inserida no portal",
+        "done": false,
+        "note": ""
+      }
+    ],
+    "pos_licitacao": {},
+    "folder": "VALENTE- 26-05 COMPRAS PUBLICAS"
+  },
+  "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05": {
+    "city": "Atibaia",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2026-05-22",
+    "status": "ganho",
+    "objeto": "",
+    "valor": "",
+    "obs": "",
+    "steps": [
+      {
+        "id": 1,
+        "label": "Pesquisa de preços e viabilidade econômica",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 2,
+        "label": "Consulta de fornecedores e preço de custo",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 3,
+        "label": "Análise de margem de lucro",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 4,
+        "label": "Verificação de prazo e condições de entrega",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 5,
+        "label": "Avaliação do histórico de pagamento do órgão",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 6,
+        "label": "Análise da documentação necessária",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 7,
+        "label": "Planilha de preços calculada e finalizada",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 8,
+        "label": "Proposta inserida no portal",
+        "done": true,
+        "note": ""
+      }
+    ],
+    "pos_licitacao": {
+      "resultado": "ganho",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
+  },
+  "BBMNET|INDAIATUBA - 03-06": {
+    "key": "BBMNET|INDAIATUBA - 03-06",
+    "city": "Indaiatuba",
+    "portal": "BBMNET",
+    "date": "2026-06-03",
+    "status": "andamento",
+    "objeto": "",
+    "valor": "",
+    "obs": "",
+    "steps": [
+      {
+        "id": 1,
+        "label": "Pesquisa de preços e viabilidade econômica",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 2,
+        "label": "Consulta de fornecedores e preço de custo",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 3,
+        "label": "Análise de margem de lucro",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 4,
+        "label": "Verificação de prazo e condições de entrega",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 5,
+        "label": "Avaliação do histórico de pagamento do órgão",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 6,
+        "label": "Análise da documentação necessária",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 7,
+        "label": "Planilha de preços calculada e finalizada",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 8,
+        "label": "Proposta inserida no portal",
+        "done": false,
+        "note": ""
+      }
+    ],
+    "pos_licitacao": {},
+    "folder": "INDAIATUBA - 03-06"
+  },
+  "JA|IRAI - 18-05": {
+    "key": "JA|IRAI - 18-05",
+    "city": "Irai",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2026-05-18",
+    "status": "perdido",
+    "valor": "",
+    "objeto": "Mobiliário",
+    "obs": "",
+    "folder": "IRAI - 18-05",
+    "_local": false
+  },
+  "JA|SANTO ANTÓNIO DO MONTE - 20-05": {
+    "key": "JA|SANTO ANTÓNIO DO MONTE - 20-05",
+    "city": "Santo António Do Monte",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2026-05-20",
+    "status": "habilitacao",
+    "valor": "",
+    "objeto": "Informática",
+    "obs": "",
+    "folder": "SANTO ANTÓNIO DO MONTE - 20-05",
+    "_local": false
+  },
+  "BBMNET|CERQUEIRA CEZAR - 26-05 BBMNET": {
+    "key": "BBMNET|CERQUEIRA CEZAR - 26-05 BBMNET",
+    "city": "Cerqueira Cezar",
+    "portal": "BBMNET",
+    "date": "2026-05-26",
+    "status": "andamento",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "folder": "CERQUEIRA CEZAR - 26-05 BBMNET",
+    "_local": false
+  },
+  "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO": {
+    "key": "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO",
+    "city": "Paracatu",
+    "portal": "BBMNET",
+    "date": "2026-05-15",
+    "status": "republicar",
+    "valor": "",
+    "objeto": "Mobiliário",
+    "obs": "hello",
+    "folder": "PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO",
+    "_local": false
+  }
+}
