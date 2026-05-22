@@ -202,5 +202,15 @@
     "obs": "hello",
     "folder": "PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO",
     "_local": false
+  },
+  "COMPRASNET|GUARULHOS 25-05": {
+    "city": "Guarulhos",
+    "portal": "COMPRASNET",
+    "date": "2026-05-25",
+    "status": "andamento",
+    "valor": "",
+    "objeto": "ALAMBRADO",
+    "obs": "",
+    "_local": false
   }
 }
