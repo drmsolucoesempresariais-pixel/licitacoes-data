@@ -140,7 +140,7 @@
     "city": "Atibaia",
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-22",
-    "status": "ganho",
+    "status": "perdido",
     "objeto": "",
     "valor": "",
     "obs": "",
@@ -195,7 +195,7 @@
       }
     ],
     "pos_licitacao": {
-      "resultado": "ganho",
+      "resultado": "perdido",
       "valor_adj": "",
       "prazo_hab": "",
       "empresa": "",
