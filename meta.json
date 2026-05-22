@@ -251,13 +251,13 @@
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 5,
         "label": "Avaliação do histórico de pagamento do órgão",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
@@ -269,7 +269,7 @@
       {
         "id": 7,
         "label": "Planilha de preços calculada e finalizada",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
