@@ -141,21 +141,10 @@
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-22",
     "status": "enviado",
-    "objeto": "",
     "valor": "",
+    "objeto": "TELAS METÁLICAS",
     "obs": "",
-    "steps": [],
-    "pos_licitacao": {
-      "resultado": "hab",
-      "valor_adj": "",
-      "prazo_hab": "",
-      "empresa": "",
-      "motivo": "",
-      "data_recurso": "",
-      "prazo_analise": "",
-      "fundamento": "",
-      "obs_pos": ""
-    }
+    "_local": false
   },
   "BBMNET|INDAIATUBA - 03-06": {
     "key": "BBMNET|INDAIATUBA - 03-06",
