@@ -72,66 +72,14 @@
     "pos_licitacao": {}
   },
   "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS": {
-    "key": "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS",
     "city": "Valente",
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-26",
     "status": "andamento",
+    "valor": "R$ 7.000.000,00",
     "objeto": "",
-    "valor": "",
     "obs": "",
-    "steps": [
-      {
-        "id": 1,
-        "label": "Pesquisa de preços e viabilidade econômica",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 2,
-        "label": "Consulta de fornecedores e preço de custo",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 3,
-        "label": "Análise de margem de lucro",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 4,
-        "label": "Verificação de prazo e condições de entrega",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 5,
-        "label": "Avaliação do histórico de pagamento do órgão",
-        "done": false,
-        "note": ""
-      },
-      {
-        "id": 6,
-        "label": "Análise da documentação necessária",
-        "done": false,
-        "note": ""
-      },
-      {
-        "id": 7,
-        "label": "Planilha de preços calculada e finalizada",
-        "done": false,
-        "note": ""
-      },
-      {
-        "id": 8,
-        "label": "Proposta inserida no portal",
-        "done": false,
-        "note": ""
-      }
-    ],
-    "pos_licitacao": {},
-    "folder": "VALENTE- 26-05 COMPRAS PUBLICAS"
+    "_local": false
   },
   "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05": {
     "city": "Atibaia",
