@@ -195,7 +195,7 @@
       }
     ],
     "pos_licitacao": {
-      "resultado": "perdido",
+      "resultado": "",
       "valor_adj": "",
       "prazo_hab": "",
       "empresa": "",
@@ -203,7 +203,7 @@
       "data_recurso": "",
       "prazo_analise": "",
       "fundamento": "",
-      "obs_pos": ""
+      "obs_pos": "aguardando analise das propostas."
     }
   },
   "BBMNET|INDAIATUBA - 03-06": {
