@@ -12,67 +12,14 @@
     "_local": false
   },
   "BBMNET|ITAPEVI - 22-05": {
-    "key": "BBMNET|ITAPEVI - 22-05",
     "city": "Itapevi",
     "portal": "BBMNET",
     "date": "2026-05-22",
-    "status": "andamento",
-    "objeto": "",
+    "status": "habilitacao",
     "valor": "",
+    "objeto": "Informática",
     "obs": "",
-    "steps": [
-      {
-        "id": 1,
-        "label": "Pesquisa de preços e viabilidade econômica",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 2,
-        "label": "Consulta de fornecedores e preço de custo",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 3,
-        "label": "Análise de margem de lucro",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 4,
-        "label": "Verificação de prazo e condições de entrega",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 5,
-        "label": "Avaliação do histórico de pagamento do órgão",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 6,
-        "label": "Análise da documentação necessária",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 7,
-        "label": "Planilha de preços calculada e finalizada",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 8,
-        "label": "Proposta inserida no portal",
-        "done": true,
-        "note": ""
-      }
-    ],
-    "pos_licitacao": {},
-    "folder": "ITAPEVI - 22-05",
-    "category": "ativo"
+    "_local": false
   },
   "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS": {
     "key": "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS",
