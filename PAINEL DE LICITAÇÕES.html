@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Licitações</title>
+<style>
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --card: #1e2235;
+    --border: #2e3354; --accent: #4f7ef8; --accent2: #7c5cbf;
+    --green: #22c55e; --yellow: #f59e0b; --orange: #f97316; --red: #ef4444;
+    --gray: #64748b; --text: #e2e8f0; --text2: #94a3b8; --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg,#1a1d27,#22263a);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 28px; display: flex; align-items: center;
+    justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo {
+    width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+    background: linear-gradient(135deg,var(--accent),var(--accent2));
+    display: flex; align-items: center; justify-content: center; font-size: 22px;
+  }
+  .header h1 { font-size: 1.2rem; font-weight: 700; }
+  .header p  { font-size: 0.75rem; color: var(--text2); margin-top: 2px; }
+  .header-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  .pill {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 12px; font-size: 0.78rem; color: var(--text2);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-green  { background: var(--green);  box-shadow: 0 0 6px var(--green); }
+  .dot-red    { background: var(--red);    box-shadow: 0 0 6px var(--red); }
+  .dot-gray   { background: var(--gray); }
+
+  .btn-add {
+    background: var(--accent); color: #fff; border: none;
+    border-radius: 8px; padding: 8px 16px; font-size: 0.83rem;
+    font-weight: 600; cursor: pointer; transition: opacity .2s;
+  }
+  .btn-add:hover { opacity: .85; }
+
+  /* ── STATS ── */
+  .stats { display: flex; gap: 12px; padding: 18px 28px; flex-wrap: wrap; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 20px; flex: 1; min-width: 110px;
+  }
+  .stat-card .num { font-size: 1.9rem; font-weight: 800; line-height: 1; }
+  .stat-card .lbl { font-size: 0.72rem; color: var(--text2); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+  .s-total  .num { color: var(--accent); }
+  .s-urgent .num { color: var(--red); }
+  .s-soon   .num { color: var(--orange); }
+  .s-ok     .num { color: var(--green); }
+  .s-rec    .num { color: var(--accent2); }
+
+  /* ── FILTERS ── */
+  .filters {
+    display: flex; gap: 8px; padding: 0 28px 16px; flex-wrap: wrap; align-items: center;
+  }
+  select, input[type=text] {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 7px 11px;
+    font-size: 0.81rem; outline: none; cursor: pointer;
+    transition: border-color .2s;
+  }
+  select:focus, input[type=text]:focus { border-color: var(--accent); }
+  input[type=text] { width: 210px; }
+  input[type=text]::placeholder { color: var(--text2); }
+  .btn-clear, .btn-refresh {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text2); border-radius: 8px; padding: 7px 12px;
+    font-size: 0.8rem; cursor: pointer; transition: all .2s;
+  }
+  .btn-clear:hover  { border-color: var(--accent); color: var(--text); }
+  .btn-refresh:hover { border-color: var(--green); color: var(--green); }
+  .view-tabs { display: flex; gap: 4px; margin-left: auto; }
+  .tab-btn {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text2); border-radius: 8px; padding: 7px 13px;
+    font-size: 0.81rem; cursor: pointer; transition: all .2s;
+  }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── MAIN ── */
+  .main { padding: 0 28px 48px; }
+
+  /* ── TIMELINE ── */
+  .day-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 0 6px; font-size: 0.75rem; font-weight: 700;
+    color: var(--text2); text-transform: uppercase; letter-spacing: 1px;
+  }
+  .day-line { flex: 1; height: 1px; background: var(--border); }
+  .day-badge {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 2px 10px; font-size: 0.71rem; white-space: nowrap;
+  }
+  .dh-today    .day-badge { background: var(--red);    border-color: var(--red);    color: #fff; }
+  .dh-tomorrow .day-badge { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .dh-soon     .day-badge { background: #3a2a1c;       border-color: var(--yellow); color: var(--yellow); }
+
+  /* ── CARD ── */
+  .lic-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+    transition: border-color .2s, transform .15s; cursor: default;
+    margin-bottom: 8px;
+  }
+  .lic-card:hover { border-color: var(--accent); transform: translateX(3px); }
+  .uc-0    { border-left: 3px solid var(--red); }
+  .uc-1    { border-left: 3px solid var(--orange); }
+  .uc-2    { border-left: 3px solid var(--yellow); }
+  .uc-3    { border-left: 3px solid var(--green); }
+  .uc-past { border-left: 3px solid var(--gray); opacity: .7; }
+  .uc-sp   { border-left: 3px solid var(--accent2); }
+
+  .card-date { min-width: 48px; text-align: center; flex-shrink: 0; }
+  .cd-day   { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+  .cd-month { font-size: 0.67rem; color: var(--text2); text-transform: uppercase; margin-top: 1px; }
+  .uc-0    .cd-day { color: var(--red); }
+  .uc-1    .cd-day { color: var(--orange); }
+  .uc-2    .cd-day { color: var(--yellow); }
+  .uc-3    .cd-day { color: var(--green); }
+  .uc-past .cd-day { color: var(--gray); }
+  .uc-sp   .cd-day { color: var(--accent2); }
+
+  .vdiv { width: 1px; height: 38px; background: var(--border); flex-shrink: 0; }
+  .card-body { flex: 1; min-width: 0; }
+  .card-title { font-size: 0.93rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-meta  { display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
+  .card-obs   { font-size: 0.71rem; color: var(--text2); margin-top: 5px; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.7rem; font-weight: 600; padding: 2px 8px;
+    border-radius: 20px; border: 1px solid transparent;
+  }
+  .cp-BBMNET               { background:#1e3a2f; border-color:#2a5c45; color:#6ee7b7; }
+  .cp-BLL                  { background:#1e3040; border-color:#2a5080; color:#7dd3fc; }
+  .cp-COMPRASNET           { background:#2f1e3a; border-color:#5c2a5c; color:#d8b4fe; }
+  .cp-PORTAL-DE-COMPRAS-PUBLICAS { background:#1e2f5e; border-color:#2e4a9e; color:#93b4ff; }
+  .cp-OUTRO                { background:#2a2a1e; border-color:#806020; color:#fde68a; }
+
+  .cs-andamento  { background:#1c3a2a; border-color:#22c55e; color:#86efac; }
+  .cs-enviado    { background:#1c2f4a; border-color:#3b82f6; color:#93c5fd; }
+  .cs-republicar { background:#3a2a1c; border-color:#f97316; color:#fdba74; }
+  .cs-recurso      { background:#2f1e3a; border-color:#a855f7; color:#d8b4fe; }
+  .cs-habilitacao  { background:#3a2f1c; border-color:#d97706; color:#fcd34d; }
+  .cs-ganho        { background:#1c3a1c; border-color:#16a34a; color:#86efac; }
+  .cs-perdido      { background:#3a1c1c; border-color:#dc2626; color:#fca5a5; }
+  .co            { background:var(--bg3); border-color:var(--border); color:var(--text2); }
+
+  .card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; }
+  .countdown {
+    font-size: 0.7rem; font-weight: 700; padding: 3px 9px;
+    border-radius: 8px; white-space: nowrap;
+  }
+  .ct-red    { background:#3a1c1c; color:var(--red); }
+  .ct-orange { background:#3a2a1c; color:var(--orange); }
+  .ct-yellow { background:#3a331c; color:var(--yellow); }
+  .ct-green  { background:#1c3a2a; color:var(--green); }
+  .ct-gray   { background:var(--bg3); color:var(--gray); }
+  .ct-purple { background:#2f1e3a; color:#d8b4fe; }
+
+  .card-actions { display: flex; gap: 5px; }
+  .btn-sm {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text2); border-radius: 6px; padding: 4px 9px;
+    font-size: 0.7rem; cursor: pointer; transition: all .2s;
+  }
+  .btn-sm:hover        { border-color: var(--yellow); color: var(--yellow); }
+  .btn-sm.del:hover    { border-color: var(--red); color: var(--red); }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: var(--bg3); padding: 9px 13px; text-align: left; font-size: 0.72rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 11px 13px; border-bottom: 1px solid var(--border); font-size: 0.83rem; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg3); }
+  .td-city { font-weight: 700; }
+
+  /* ── EMPTY ── */
+  .empty { text-align: center; padding: 60px 20px; color: var(--text2); }
+  .empty .ico { font-size: 3rem; margin-bottom: 12px; }
+
+  /* ── OFFLINE BANNER ── */
+  .banner {
+    background: #3a2a1c; border: 1px solid var(--orange); border-radius: 10px;
+    padding: 12px 18px; margin-bottom: 16px; font-size: 0.83rem; color: var(--orange);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .banner.hidden { display: none; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.75); z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 26px; width: 500px; max-width: 95vw;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal h2 { font-size: 1.05rem; margin-bottom: 18px; }
+  .fg { display: flex; flex-direction: column; gap: 4px; }
+  .fg label { font-size: 0.72rem; color: var(--text2); font-weight: 600; text-transform: uppercase; }
+  .fg input, .fg select, .fg textarea {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 8px 11px;
+    font-size: 0.83rem; outline: none; width: 100%; transition: border-color .2s;
+  }
+  .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--accent); }
+  .fg textarea { resize: vertical; min-height: 65px; font-family: inherit; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+  .full { grid-column: 1/-1; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+  .btn-cancel { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); border-radius: 8px; padding: 8px 16px; font-size: 0.83rem; cursor: pointer; }
+  .btn-save { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 8px 20px; font-size: 0.83rem; font-weight: 600; cursor: pointer; }
+  .btn-save:hover { opacity: .85; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .hidden { display: none !important; }
+  .spin { display: inline-block; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── PROGRESS BADGE ── */
+  .prog-wrap { display:flex; align-items:center; gap:6px; cursor:pointer; }
+  .prog-count { font-size:0.7rem; font-weight:700; white-space:nowrap; min-width:28px; text-align:right; }
+  .prog-bar   { width:52px; height:5px; background:var(--bg3); border-radius:3px; overflow:hidden; flex-shrink:0; }
+  .prog-fill  { height:100%; border-radius:3px; transition:width .3s; }
+  .prog-done     .prog-count { color:var(--green); }
+  .prog-done     .prog-fill  { background:var(--green); }
+  .prog-partial  .prog-count { color:var(--yellow); }
+  .prog-partial  .prog-fill  { background:var(--yellow); }
+  .prog-none     .prog-count { color:var(--gray); }
+  .prog-none     .prog-fill  { background:var(--gray); }
+  .btn-sm.ck:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* ── CHECKLIST OVERLAY ── */
+  .cl-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,.82); z-index:200;
+    align-items:center; justify-content:center;
+  }
+  .cl-overlay.open { display:flex; }
+  .cl-panel {
+    background:var(--bg2); border:1px solid var(--border);
+    border-radius:16px; width:580px; max-width:96vw;
+    max-height:90vh; overflow-y:auto; display:flex; flex-direction:column;
+  }
+  .cl-head {
+    display:flex; align-items:flex-start; justify-content:space-between;
+    padding:20px 24px 14px; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:var(--bg2); z-index:1;
+  }
+  .cl-head h2 { font-size:1.05rem; font-weight:700; margin:0; }
+  .cl-head p  { font-size:0.73rem; color:var(--text2); margin:3px 0 0; }
+  .cl-close { background:none; border:none; color:var(--text2); font-size:1.2rem; cursor:pointer; padding:0 4px; line-height:1; flex-shrink:0; }
+  .cl-close:hover { color:var(--text); }
+  .cl-prog-row {
+    padding:10px 24px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:12px;
+  }
+  .cl-prog-bar  { flex:1; height:8px; background:var(--bg3); border-radius:4px; overflow:hidden; }
+  .cl-prog-fill { height:100%; background:var(--accent); border-radius:4px; transition:width .4s; }
+  .cl-prog-lbl  { font-size:0.78rem; font-weight:700; color:var(--accent); white-space:nowrap; }
+  .cl-steps { padding:14px 24px 0; display:flex; flex-direction:column; gap:8px; }
+  .cl-step {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:10px; overflow:hidden; transition:border-color .2s;
+  }
+  .cl-step.done { border-color:#22c55e55; background:#1a2e1a; }
+  .cl-step-row { display:flex; align-items:center; gap:10px; padding:11px 14px; cursor:pointer; }
+  .cl-step-row:hover { background:rgba(255,255,255,.04); }
+  .cl-check {
+    width:20px; height:20px; border-radius:5px; flex-shrink:0;
+    border:2px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.8rem; transition:all .2s;
+  }
+  .cl-step.done .cl-check { background:var(--green); border-color:var(--green); color:#fff; }
+  .cl-step-num   { font-size:0.68rem; color:var(--text2); background:var(--bg3); border-radius:4px; padding:1px 6px; flex-shrink:0; }
+  .cl-step-label { flex:1; font-size:0.87rem; }
+  .cl-step.done .cl-step-label { text-decoration:line-through; color:var(--text2); }
+  .cl-note-wrap { padding:0 14px 10px; }
+  .cl-note-wrap textarea {
+    width:100%; background:var(--bg3); border:1px solid var(--border);
+    color:var(--text); border-radius:7px; padding:7px 10px;
+    font-size:0.8rem; font-family:inherit; resize:vertical; min-height:46px;
+    outline:none; transition:border-color .2s;
+  }
+  .cl-note-wrap textarea:focus { border-color:var(--accent); }
+  .cl-note-wrap textarea::placeholder { color:var(--text2); opacity:.6; }
+  .cl-footer {
+    padding:12px 24px; border-top:1px solid var(--border);
+    display:flex; justify-content:space-between; align-items:center;
+    position:sticky; bottom:0; background:var(--bg2); margin-top:14px;
+  }
+  .cl-save-st       { font-size:0.73rem; color:var(--text2); }
+  .cl-save-st.saved { color:var(--green); }
+
+  /* ── PÓS-PREGÃO ── */
+  .pos-badge-ganho      { background:#1c3a1c; border-color:#16a34a; color:#86efac; }
+  .pos-badge-perdido    { background:#3a1c1c; border-color:#dc2626; color:#fca5a5; }
+  .pos-badge-recurso    { background:#2f1e3a; border-color:#a855f7; color:#d8b4fe; }
+  .pos-badge-hab          { background:#3a2f1c; border-color:#d97706; color:#fcd34d; }
+  .pos-badge-contrarrazao { background:#2a1e3a; border-color:#7c3aed; color:#c4b5fd; }
+  .btn-sm.pos:hover     { border-color:#a855f7; color:#d8b4fe; }
+  .pp-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+  .pp-full { grid-column:1/-1; }
+  .pp-field { display:flex; flex-direction:column; gap:4px; }
+  .pp-field label { font-size:0.72rem; color:var(--text2); font-weight:600; text-transform:uppercase; }
+  .pp-field input, .pp-field select, .pp-field textarea {
+    background:var(--bg3); border:1px solid var(--border);
+    color:var(--text); border-radius:8px; padding:8px 11px;
+    font-size:0.83rem; outline:none; width:100%; transition:border-color .2s;
+  }
+  .pp-field input:focus, .pp-field select:focus, .pp-field textarea:focus { border-color:var(--accent); }
+  .pp-field textarea { resize:vertical; min-height:60px; font-family:inherit; }
+  .pp-section { padding:18px 24px 0; }
+  .pp-section-title {
+    font-size:0.7rem; font-weight:700; color:var(--text2);
+    text-transform:uppercase; letter-spacing:.8px;
+    padding-bottom:10px; border-bottom:1px solid var(--border); margin-bottom:14px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">📋</div>
+    <div>
+      <h1>Painel de Licitações</h1>
+      <p id="subtitle">Pregões em Desenvolvimento</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="pill" id="sync-status">
+      <span class="dot dot-gray" id="sync-dot"></span>
+      <span id="sync-label">Conectando...</span>
+    </div>
+    <div class="pill" id="today-pill"></div>
+    <button class="btn-add" onclick="openModal()">+ Nova Licitação</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats" id="stats-bar"></div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <select id="f-portal" onchange="renderView()">
+    <option value="">Todos os Portais</option>
+    <option value="BBMNET">BBMNET</option>
+    <option value="BLL">BLL</option>
+    <option value="COMPRASNET">COMPRASNET</option>
+    <option value="PORTAL DE COMPRAS PUBLICAS">Portal Compras Públicas</option>
+    <option value="OUTRO">Portal Próprio</option>
+  </select>
+  <select id="f-status" onchange="renderView()">
+    <option value="">Todos os Status</option>
+    <option value="andamento">Em Andamento</option>
+    <option value="enviado">Proposta Enviada</option>
+    <option value="republicar">Ag. Republicação</option>
+    <option value="habilitacao">Ag. Habilitação</option>
+    <option value="recurso">Recurso Administrativo</option>
+    <option value="ganho">Ganho</option>
+    <option value="perdido">Perdido</option>
+  </select>
+  <input type="text" id="f-search" placeholder="🔍 Buscar município ou objeto..." oninput="renderView()">
+  <button class="btn-clear" onclick="clearFilters()">Limpar</button>
+  <button class="btn-refresh" onclick="fetchData(true)">↻ Atualizar</button>
+  <div class="view-tabs">
+    <button class="tab-btn active" id="tab-tl"   onclick="setView('tl')">📅 Por Data</button>
+    <button class="tab-btn"        id="tab-tb"   onclick="setView('tb')">📊 Tabela</button>
+    <button class="tab-btn"        id="tab-hist" onclick="setView('hist')">📚 Histórico</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div id="offline-banner" class="banner hidden">
+    ⚠️ <span>Monitor offline. Abra <b>Iniciar Painel.bat</b> para ativar o monitoramento automático.
+    Edições feitas aqui serão salvas localmente.</span>
+  </div>
+  <div id="view-tl"></div>
+  <div id="view-tb"   class="hidden"></div>
+  <div id="view-hist" class="hidden"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeOutside(event)">
+  <div class="modal">
+    <h2 id="modal-title">Nova Licitação</h2>
+    <div class="form-grid">
+      <div class="fg full"><label>Município</label><input id="fc-city" placeholder="Ex: São Paulo - SP"></div>
+      <div class="fg"><label>Portal</label>
+        <select id="fc-portal">
+          <option value="BBMNET">BBMNET</option>
+          <option value="BLL">BLL</option>
+          <option value="COMPRASNET">COMPRASNET</option>
+          <option value="PORTAL DE COMPRAS PUBLICAS">Portal Compras Públicas</option>
+          <option value="OUTRO">Portal Próprio da Prefeitura</option>
+        </select>
+      </div>
+      <div class="fg"><label>Data de Abertura</label><input type="date" id="fc-date"></div>
+      <div class="fg"><label>Status</label>
+        <select id="fc-status">
+          <option value="andamento">Em Andamento</option>
+          <option value="enviado">Proposta Enviada</option>
+          <option value="republicar">Ag. Republicação</option>
+          <option value="habilitacao">Ag. Habilitação</option>
+          <option value="recurso">Recurso Administrativo</option>
+          <option value="ganho">Ganho</option>
+          <option value="perdido">Perdido</option>
+        </select>
+      </div>
+      <div class="fg"><label>Valor Estimado (R$)</label><input id="fc-valor" placeholder="Ex: 150.000,00"></div>
+      <div class="fg full"><label>Objeto</label><input id="fc-objeto" placeholder="Ex: Mobiliário, Informática..."></div>
+      <div class="fg full"><label>Observações</label><textarea id="fc-obs"></textarea></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save"   onclick="saveModal()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PÓS-PREGÃO MODAL -->
+<div class="cl-overlay" id="pp-modal" onclick="ppOutside(event)">
+  <div class="cl-panel" style="width:540px">
+    <div class="cl-head">
+      <div>
+        <h2 id="pp-title">Pós-Pregão</h2>
+        <p id="pp-subtitle"></p>
+      </div>
+      <button class="cl-close" onclick="closePP()">✕</button>
+    </div>
+
+    <div class="pp-section">
+      <div class="pp-section-title">Resultado do Pregão</div>
+      <div class="pp-grid">
+        <div class="pp-field pp-full">
+          <label>Resultado</label>
+          <select id="pp-resultado" onchange="ppToggleFields()">
+            <option value="">Aguardando resultado</option>
+            <option value="ganho">🏆 Ganho</option>
+            <option value="perdido">✕ Perdido</option>
+            <option value="hab">🔍 Aguardando Análise de Habilitação</option>
+            <option value="recurso">⚖️ Em Recurso</option>
+            <option value="contrarrazao">📝 Contrarrazão Apresentada</option>
+          </select>
+        </div>
+        <div class="pp-field" id="pp-f-valor">
+          <label>Valor Adjudicado (R$)</label>
+          <input id="pp-valor-adj" placeholder="Ex: 85.000,00">
+        </div>
+        <div class="pp-field" id="pp-f-prazo-hab">
+          <label>Prazo para Análise de Habilitação</label>
+          <input type="date" id="pp-prazo-hab">
+        </div>
+        <div class="pp-field" id="pp-f-empresa">
+          <label>Empresa Vencedora</label>
+          <input id="pp-empresa" placeholder="Nome da empresa">
+        </div>
+        <div class="pp-field pp-full" id="pp-f-motivo">
+          <label>Motivo da Perda</label>
+          <input id="pp-motivo" placeholder="Ex: Preço acima, documentação, etc.">
+        </div>
+      </div>
+    </div>
+
+    <div class="pp-section" id="pp-sec-recurso">
+      <div class="pp-section-title">Dados do Recurso</div>
+      <div class="pp-grid">
+        <div class="pp-field">
+          <label>Data de Interposição</label>
+          <input type="date" id="pp-data-recurso">
+        </div>
+        <div class="pp-field">
+          <label>Prazo para Análise</label>
+          <input type="date" id="pp-prazo-analise">
+        </div>
+        <div class="pp-field pp-full">
+          <label>Fundamento / Argumentação</label>
+          <textarea id="pp-fundamento" placeholder="Resumo do recurso ou contrarrazão..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="pp-section" style="padding-bottom:18px">
+      <div class="pp-section-title">Observações Gerais</div>
+      <div class="pp-field">
+        <textarea id="pp-obs-pos" placeholder="Anotações sobre o resultado, próximos passos..."></textarea>
+      </div>
+    </div>
+
+    <div class="cl-footer">
+      <span class="cl-save-st" id="pp-save-st"></span>
+      <div style="display:flex;gap:8px">
+        <button class="btn-cancel" onclick="closePP()">Cancelar</button>
+        <button class="btn-save"   onclick="savePP()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ANÁLISE IA MODAL -->
+<div class="cl-overlay" id="ai-modal" onclick="aiOutside(event)">
+  <div class="cl-panel" style="width:620px">
+    <div class="cl-head">
+      <div>
+        <h2 id="ai-title">🤖 Análise Inteligente</h2>
+        <p id="ai-subtitle"></p>
+      </div>
+      <button class="cl-close" onclick="closeAI()">✕</button>
+    </div>
+    <div id="ai-content" style="padding:24px 24px 20px">
+      <div style="text-align:center;color:var(--text2);padding:40px">
+        <div class="spin" style="font-size:2rem;display:inline-block">⚙️</div>
+        <p style="margin-top:12px">Analisando arquivos com Claude AI...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKLIST MODAL -->
+<div class="cl-overlay" id="cl-modal" onclick="clOutside(event)">
+  <div class="cl-panel">
+    <div class="cl-head">
+      <div>
+        <h2 id="cl-title">Checklist</h2>
+        <p id="cl-subtitle"></p>
+      </div>
+      <button class="cl-close" onclick="closeChecklist()">✕</button>
+    </div>
+    <div class="cl-prog-row">
+      <div class="cl-prog-bar"><div class="cl-prog-fill" id="cl-fill" style="width:0%"></div></div>
+      <span class="cl-prog-lbl" id="cl-prog-lbl">0/8 etapas</span>
+    </div>
+    <div class="cl-steps" id="cl-steps"></div>
+    <div class="cl-footer">
+      <span class="cl-save-st" id="cl-save-st"></span>
+      <button class="btn-cancel" onclick="closeChecklist()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONSTANTES
+// ══════════════════════════════════════════════
+const API = 'http://localhost:8765';
+const POLL_MS = 8000;   // verifica atualizações a cada 8 s
+
+const S_LABEL = {
+  andamento:   'Em Andamento',
+  enviado:     'Proposta Enviada',
+  republicar:  'Ag. Republicação',
+  habilitacao: 'Ag. Habilitação',
+  recurso:     'Recurso Admin.',
+  ganho:       'Ganho',
+  perdido:     'Perdido',
+};
+const P_SHORT = {
+  'BBMNET':'BBMNET',
+  'BLL':'BLL',
+  'COMPRASNET':'COMPRASNET',
+  'PORTAL DE COMPRAS PUBLICAS':'Compras Públicas',
+  'OUTRO':'Portal Próprio',
+};
+const MONTHS = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MFULL  = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+// ══════════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════════
+let allData      = [];
+let histData     = [];
+let lastUpdate   = '';
+let online       = false;
+let currentView  = 'tl';
+let editingItem  = null;
+let nextLocalId  = 10000;
+let loadedHist   = false;
+let hasClaude    = false;
+
+// LocalStorage fallback
+const LS_KEY = 'lic_local_items';
+function localItems()       { try { return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); } catch { return []; } }
+function saveLocal(items)   { localStorage.setItem(LS_KEY, JSON.stringify(items)); }
+
+// ══════════════════════════════════════════════
+// API / SYNC
+// ══════════════════════════════════════════════
+async function fetchData(force=false) {
+  try {
+    const res  = await fetch(`${API}/api/data`, { signal: AbortSignal.timeout(3000) });
+    const json = await res.json();
+
+    if(force || json.last_update !== lastUpdate) {
+      lastUpdate = json.last_update;
+      // Mescla dados do servidor com itens locais extras
+      const localExtras = localItems().filter(i => i._local);
+      allData = [...json.data, ...localExtras];
+      renderAll();
+    }
+    setOnline(true);
+  } catch {
+    setOnline(false);
+    if(!allData.length) {
+      allData = localItems();
+      renderAll();
+    }
+  }
+}
+
+async function pushSave(item) {
+  if(!online) { return; }
+  try {
+    await fetch(`${API}/api/save`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify([item]),
+      signal: AbortSignal.timeout(3000),
+    });
+  } catch { /* offline — mudança já no localStorage */ }
+}
+
+function setOnline(state) {
+  online = state;
+  const dot   = document.getElementById('sync-dot');
+  const label = document.getElementById('sync-label');
+  const banner= document.getElementById('offline-banner');
+  if(state) {
+    dot.className   = 'dot dot-green';
+    label.textContent = 'Ao vivo • sincronizado';
+    banner.classList.add('hidden');
+  } else {
+    dot.className   = 'dot dot-red';
+    label.textContent = 'Monitor offline';
+    banner.classList.remove('hidden');
+  }
+}
+
+// Poll periódico
+setInterval(() => fetchData(), POLL_MS);
+
+// ══════════════════════════════════════════════
+// UTILS DE DATA
+// ══════════════════════════════════════════════
+function todayDate() {
+  const d = new Date(); d.setHours(0,0,0,0); return d;
+}
+function parseDate(s) {
+  if(!s) return null;
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y,m-1,d);
+}
+function daysUntil(s) {
+  if(!s) return null;
+  return Math.round((parseDate(s) - todayDate()) / 86400000);
+}
+function fmtDate(s) {
+  if(!s) return '—';
+  const [y,m,d] = s.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+// ══════════════════════════════════════════════
+// URGENCY
+// ══════════════════════════════════════════════
+function uc(item) {
+  if(item.status === 'recurso') return 'uc-sp';
+  const d = daysUntil(item.date);
+  if(d === null) return 'uc-sp';
+  if(d < 0)  return 'uc-past';
+  if(d === 0) return 'uc-0';
+  if(d <= 2)  return 'uc-1';
+  if(d <= 6)  return 'uc-2';
+  return 'uc-3';
+}
+function countdown(item) {
+  if(item.status === 'recurso') return `<span class="countdown ct-purple">⚖️ Recurso</span>`;
+  const d = daysUntil(item.date);
+  if(d === null) return `<span class="countdown ct-gray">Sem data</span>`;
+  if(d < 0)  return `<span class="countdown ct-gray">Enc. há ${-d}d</span>`;
+  if(d === 0) return `<span class="countdown ct-red">⚡ HOJE</span>`;
+  if(d === 1) return `<span class="countdown ct-orange">🔥 AMANHÃ</span>`;
+  if(d <= 6)  return `<span class="countdown ct-yellow">⏰ ${d} dias</span>`;
+  return `<span class="countdown ct-green">✅ ${d} dias</span>`;
+}
+
+// ══════════════════════════════════════════════
+// FILTRO
+// ══════════════════════════════════════════════
+function filtered() {
+  const portal = document.getElementById('f-portal').value;
+  const status = document.getElementById('f-status').value;
+  const search = document.getElementById('f-search').value.toLowerCase();
+  return allData.filter(i => {
+    if(portal && i.portal !== portal) return false;
+    if(status && i.status !== status) return false;
+    if(search && !i.city.toLowerCase().includes(search) && !i.objeto.toLowerCase().includes(search)) return false;
+    return true;
+  });
+}
+function clearFilters() {
+  document.getElementById('f-portal').value = '';
+  document.getElementById('f-status').value = '';
+  document.getElementById('f-search').value = '';
+  renderView();
+}
+
+// ══════════════════════════════════════════════
+// RENDER STATS
+// ══════════════════════════════════════════════
+function renderStats() {
+  let total=0, urgent=0, soon=0, ok=0, rec=0;
+  allData.forEach(i => {
+    total++;
+    if(i.status==='recurso'){ rec++; return; }
+    const d = daysUntil(i.date);
+    if(d===null || d<0) return;
+    if(d<=1) urgent++;
+    else if(d<=6) soon++;
+    else ok++;
+  });
+  document.getElementById('stats-bar').innerHTML = `
+    <div class="stat-card s-total" ><div class="num">${total}</div><div class="lbl">Total</div></div>
+    <div class="stat-card s-urgent"><div class="num">${urgent}</div><div class="lbl">Urgente ≤1d</div></div>
+    <div class="stat-card s-soon"  ><div class="num">${soon}</div><div class="lbl">Esta semana</div></div>
+    <div class="stat-card s-ok"    ><div class="num">${ok}</div><div class="lbl">Tranquilos</div></div>
+    <div class="stat-card s-rec"   ><div class="num">${rec}</div><div class="lbl">Em Recurso</div></div>`;
+}
+
+// ══════════════════════════════════════════════
+// CARD HTML
+// ══════════════════════════════════════════════
+function portalKey(p) { return p.replace(/\s+/g,'-'); }
+
+function cardHTML(item) {
+  const u   = uc(item);
+  const pk  = portalKey(item.portal);
+  const d   = item.date ? item.date.split('-')[2] : '??';
+  const mon = item.date ? MONTHS[parseInt(item.date.split('-')[1])-1] : '---';
+  return `
+<div class="lic-card ${u}" id="card-${item.id}">
+  <div class="card-date">
+    <div class="cd-day">${d}</div>
+    <div class="cd-month">${mon}</div>
+  </div>
+  <div class="vdiv"></div>
+  <div class="card-body">
+    <div class="card-title">${item.city}</div>
+    <div class="card-meta">
+      <span class="chip cp-${pk}">${P_SHORT[item.portal]||item.portal}</span>
+      <span class="chip cs-${item.status}">${S_LABEL[item.status]||item.status}</span>
+      ${item.objeto?`<span class="chip co">${item.objeto}</span>`:''}
+      ${item.valor ?`<span class="chip co">R$ ${item.valor}</span>`:''}
+      ${posBadgeHTML(item)}
+    </div>
+    ${item.obs?`<div class="card-obs">💬 ${item.obs}</div>`:''}
+  </div>
+  <div class="card-right">
+    ${countdown(item)}
+    ${stepProgressHTML(item)}
+    <div class="card-actions">
+      <button class="btn-sm ck"  onclick="openChecklist(${item.id})">☑ Tarefas</button>
+      <button class="btn-sm pos" onclick="openPP(${item.id})">📋 Pós-Pregão</button>
+      ${hasClaude?`<button class="btn-sm" onclick="analyzeItem(${item.id})" title="Analisar com IA">🤖</button>`:''}
+      <button class="btn-sm"     onclick="editItem(${item.id})">✏️</button>
+      <button class="btn-sm del" onclick="deleteItem(${item.id})">🗑️</button>
+    </div>
+  </div>
+</div>`;
+}
+
+// ══════════════════════════════════════════════
+// TIMELINE
+// ══════════════════════════════════════════════
+function renderTimeline() {
+  const items = filtered();
+  const el = document.getElementById('view-tl');
+  if(!items.length) { el.innerHTML = emptyHTML(); return; }
+
+  const todayStr    = todayDate().toISOString().slice(0,10);
+  const tomorrow    = new Date(todayDate().getTime()+86400000).toISOString().slice(0,10);
+
+  const groups = {}; const noDate = [];
+  items.forEach(i => {
+    if(!i.date) { noDate.push(i); return; }
+    (groups[i.date]||(groups[i.date]=[])).push(i);
+  });
+  const sorted = Object.keys(groups).sort();
+
+  let html = '';
+  sorted.forEach(ds => {
+    const isToday    = ds===todayStr;
+    const isTomorrow = ds===tomorrow;
+    const d = daysUntil(ds);
+    let cls = isToday ? 'dh-today' : isTomorrow ? 'dh-tomorrow' : (d>0&&d<=6)?'dh-soon':'';
+    const [y,m,day] = ds.split('-');
+    const dateObj  = parseDate(ds);
+    const dayName  = DAYS[dateObj.getDay()];
+    const label    = isToday    ? `📅 HOJE — ${dayName}, ${day}/${m}`
+                   : isTomorrow ? `🔥 AMANHÃ — ${dayName}, ${day}/${m}`
+                   : `${dayName}, ${day} de ${MFULL[parseInt(m)-1]}`;
+    html += `<div>
+      <div class="day-header ${cls}">
+        <div class="day-line"></div>
+        <div class="day-badge">${label}</div>
+        <div class="day-line"></div>
+      </div>
+      ${groups[ds].map(cardHTML).join('')}
+    </div>`;
+  });
+  if(noDate.length) {
+    html += `<div>
+      <div class="day-header">
+        <div class="day-line"></div><div class="day-badge">⚖️ Sem Data Definida</div><div class="day-line"></div>
+      </div>
+      ${noDate.map(cardHTML).join('')}
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════
+// TABLE
+// ══════════════════════════════════════════════
+function renderTable() {
+  const items = filtered().sort((a,b)=>{
+    if(!a.date&&!b.date) return 0;
+    if(!a.date) return 1; if(!b.date) return -1;
+    return a.date.localeCompare(b.date);
+  });
+  const el = document.getElementById('view-tb');
+  if(!items.length) { el.innerHTML = emptyHTML(); return; }
+  const pk = p => portalKey(p);
+  let html = `<div class="table-wrap"><table><thead><tr>
+    <th>Município</th><th>Portal</th><th>Data</th><th>Objeto</th><th>Status</th><th>Prazo</th><th>Ações</th>
+  </tr></thead><tbody>`;
+  items.forEach(i => {
+    html += `<tr>
+      <td class="td-city">${i.city}</td>
+      <td><span class="chip cp-${pk(i.portal)}">${P_SHORT[i.portal]||i.portal}</span></td>
+      <td>${fmtDate(i.date)}</td>
+      <td>${i.objeto||'—'}</td>
+      <td><span class="chip cs-${i.status}">${S_LABEL[i.status]||i.status}</span></td>
+      <td>${countdown(i)}</td>
+      <td style="display:flex;gap:5px">
+        <button class="btn-sm"     onclick="editItem(${i.id})">✏️</button>
+        <button class="btn-sm del" onclick="deleteItem(${i.id})">🗑️</button>
+      </td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>`;
+  el.innerHTML = html;
+}
+
+function emptyHTML() {
+  return `<div class="empty"><div class="ico">🔎</div><p>Nenhuma licitação encontrada.</p></div>`;
+}
+
+// ══════════════════════════════════════════════
+// RENDER ALL
+// ══════════════════════════════════════════════
+function renderAll() { renderStats(); renderView(); }
+function renderView() {
+  if(currentView==='tl') renderTimeline(); else renderTable();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('tab-tl').classList.toggle('active',   v==='tl');
+  document.getElementById('tab-tb').classList.toggle('active',   v==='tb');
+  document.getElementById('tab-hist').classList.toggle('active', v==='hist');
+  document.getElementById('view-tl').classList.toggle('hidden',   v!=='tl');
+  document.getElementById('view-tb').classList.toggle('hidden',   v!=='tb');
+  document.getElementById('view-hist').classList.toggle('hidden', v!=='hist');
+  if (v === 'hist') {
+    if (!loadedHist) fetchHistorico(); else renderHistorico();
+  } else {
+    renderView();
+  }
+}
+
+// ══════════════════════════════════════════════
+// HISTÓRICO (PREGÕES FINALIZADOS)
+// ══════════════════════════════════════════════
+async function fetchHistorico() {
+  const el = document.getElementById('view-hist');
+  el.innerHTML = `<div class="empty"><div class="ico"><span class="spin">⚙️</span></div><p>Carregando histórico...</p></div>`;
+  try {
+    const res  = await fetch(`${API}/api/historico`, { signal: AbortSignal.timeout(5000) });
+    const json = await res.json();
+    histData   = json.data || [];
+    loadedHist = true;
+    renderHistorico();
+  } catch {
+    el.innerHTML = `<div class="empty"><div class="ico">⚠️</div><p>Erro ao carregar histórico. Verifique se o servidor está rodando.</p></div>`;
+  }
+}
+
+function renderHistorico() {
+  const el     = document.getElementById('view-hist');
+  const fSearch= document.getElementById('f-search').value.toLowerCase();
+  const fPortal= document.getElementById('f-portal').value;
+
+  let items = histData.filter(i => {
+    if (fPortal && i.portal !== fPortal) return false;
+    if (fSearch && !i.city.toLowerCase().includes(fSearch)
+                && !(i.objeto||'').toLowerCase().includes(fSearch)) return false;
+    return true;
+  }).sort((a, b) => {
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1; if (!b.date) return -1;
+    return b.date.localeCompare(a.date);
+  });
+
+  if (!histData.length) {
+    el.innerHTML = `<div class="empty"><div class="ico">📂</div><p>Nenhum pregão no histórico ainda.</p></div>`;
+    return;
+  }
+
+  const total   = histData.length;
+  const ganhos  = histData.filter(i => i.status === 'ganho').length;
+  const perdidos= histData.filter(i => i.status === 'perdido').length;
+  const taxa    = total ? Math.round(ganhos / total * 100) : 0;
+
+  let html = `
+    <div class="stats" style="padding:0 0 16px">
+      <div class="stat-card s-total" ><div class="num">${total}</div><div class="lbl">Histórico Total</div></div>
+      <div class="stat-card s-ok"    ><div class="num">${ganhos}</div><div class="lbl">🏆 Ganhos</div></div>
+      <div class="stat-card s-urgent"><div class="num">${perdidos}</div><div class="lbl">Não Ganhos</div></div>
+      <div class="stat-card s-rec"   ><div class="num">${taxa}%</div><div class="lbl">Taxa de Sucesso</div></div>
+    </div>`;
+
+  if (!items.length) {
+    html += `<div class="empty"><div class="ico">🔎</div><p>Nenhum resultado para o filtro atual.</p></div>`;
+  } else {
+    items.forEach(i => {
+      const d   = i.date ? i.date.split('-')[2] : '??';
+      const mon = i.date ? MONTHS[parseInt(i.date.split('-')[1])-1] : '---';
+      const pk  = portalKey(i.portal);
+      const isGanho = i.status === 'ganho';
+      const ucCls   = isGanho ? 'uc-3' : 'uc-past';
+      html += `
+  <div class="lic-card ${ucCls}" style="opacity:${isGanho?'1':'0.72'}">
+    <div class="card-date">
+      <div class="cd-day">${d}</div>
+      <div class="cd-month">${mon}</div>
+    </div>
+    <div class="vdiv"></div>
+    <div class="card-body">
+      <div class="card-title">${i.city}</div>
+      <div class="card-meta">
+        <span class="chip cp-${pk}">${P_SHORT[i.portal]||i.portal}</span>
+        <span class="chip cs-${i.status}">${S_LABEL[i.status]||i.status}</span>
+        ${i.objeto?`<span class="chip co">${i.objeto}</span>`:''}
+      </div>
+      ${i.obs?`<div class="card-obs">💬 ${i.obs}</div>`:''}
+    </div>
+    <div class="card-right">
+      <span style="font-size:1.6rem;line-height:1">${isGanho?'🏆':'—'}</span>
+    </div>
+  </div>`;
+    });
+  }
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════
+// ANÁLISE INTELIGENTE (CLAUDE AI)
+// ══════════════════════════════════════════════
+let _aiId = null;
+
+async function analyzeItem(id) {
+  _aiId = id;
+  const item = allData.find(d => d.id === id);
+  if (!item) return;
+  document.getElementById('ai-title').textContent    = `🤖 Análise — ${item.city}`;
+  document.getElementById('ai-subtitle').textContent =
+    (P_SHORT[item.portal]||item.portal) + ' • ' + fmtDate(item.date);
+  document.getElementById('ai-content').innerHTML = `
+    <div style="text-align:center;color:var(--text2);padding:40px">
+      <div class="spin" style="font-size:2rem;display:inline-block">⚙️</div>
+      <p style="margin-top:12px">Analisando arquivos com Claude AI...</p>
+    </div>`;
+  document.getElementById('ai-modal').classList.add('open');
+
+  try {
+    const res  = await fetch(`${API}/api/analyze`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: item.key }),
+      signal: AbortSignal.timeout(30000),
+    });
+    const data = await res.json();
+
+    if (!data.ok) {
+      document.getElementById('ai-content').innerHTML = `
+        <div style="color:var(--red);padding:20px;background:#3a1c1c;border-radius:8px;font-size:0.85rem;white-space:pre-wrap">${data.error}</div>`;
+      return;
+    }
+
+    const alertsHtml = data.alertas && data.alertas.length
+      ? `<div style="background:#3a1c1c;border:1px solid var(--red);border-radius:8px;padding:12px;margin-top:14px">
+           <strong style="color:var(--red);font-size:0.78rem">⚠️ ALERTAS:</strong>
+           <ul style="margin:6px 0 0 16px;color:var(--text2);font-size:0.84rem">
+             ${data.alertas.map(a=>`<li>${a}</li>`).join('')}
+           </ul></div>` : '';
+
+    const stepsHtml = data.proximos_passos && data.proximos_passos.length
+      ? `<div style="margin-top:14px">
+           <div style="font-size:0.72rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Próximos Passos</div>
+           <ol style="margin:0 0 0 18px;color:var(--text);font-size:0.85rem">
+             ${data.proximos_passos.map(s=>`<li style="margin-bottom:5px">${s}</li>`).join('')}
+           </ol></div>` : '';
+
+    document.getElementById('ai-content').innerHTML = `
+      <div style="padding:4px">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+          <span style="font-size:1.4rem">📊</span>
+          <div>
+            <div style="font-size:1rem;font-weight:700;margin-bottom:5px">${data.fase}</div>
+            <span class="chip cs-${data.status_sugerido}">${S_LABEL[data.status_sugerido]||data.status_sugerido}</span>
+          </div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;font-size:0.87rem;line-height:1.65;color:var(--text2)">
+          ${data.resumo}
+        </div>
+        ${stepsHtml}${alertsHtml}
+      </div>`;
+  } catch(e) {
+    document.getElementById('ai-content').innerHTML = `
+      <div style="color:var(--red);padding:20px">Erro: ${e.message}</div>`;
+  }
+}
+
+function closeAI()       { document.getElementById('ai-modal').classList.remove('open'); }
+function aiOutside(e)    { if (e.target.id === 'ai-modal') closeAI(); }
+
+// ══════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════
+function openModal(item=null) {
+  editingItem = item;
+  document.getElementById('modal-title').textContent = item ? 'Editar Licitação' : 'Nova Licitação';
+  document.getElementById('fc-city').value   = item?.city   || '';
+  document.getElementById('fc-portal').value = item?.portal || 'BBMNET';
+  document.getElementById('fc-date').value   = item?.date   || '';
+  document.getElementById('fc-status').value = item?.status || 'andamento';
+  document.getElementById('fc-valor').value  = item?.valor  || '';
+  document.getElementById('fc-objeto').value = item?.objeto || '';
+  document.getElementById('fc-obs').value    = item?.obs    || '';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal()      { document.getElementById('modal').classList.remove('open'); }
+function closeOutside(e)   { if(e.target.id==='modal') closeModal(); }
+
+function saveModal() {
+  const city = document.getElementById('fc-city').value.trim();
+  if(!city) { alert('Informe o município.'); return; }
+
+  const item = {
+    id:     editingItem?.id || nextLocalId++,
+    key:    editingItem?.key || `LOCAL|${city}|${Date.now()}`,
+    city,
+    portal: document.getElementById('fc-portal').value,
+    date:   document.getElementById('fc-date').value,
+    status: document.getElementById('fc-status').value,
+    valor:  document.getElementById('fc-valor').value.trim(),
+    objeto: document.getElementById('fc-objeto').value.trim(),
+    obs:    document.getElementById('fc-obs').value.trim(),
+    folder: editingItem?.folder || '',
+    _local: !editingItem,
+  };
+
+  if(editingItem) {
+    const idx = allData.findIndex(d=>d.id===editingItem.id);
+    if(idx>=0) allData[idx] = item;
+  } else {
+    allData.push(item);
+  }
+
+  // Persiste localmente (fallback offline)
+  const locals = localItems().filter(i=>i.key!==item.key);
+  locals.push(item);
+  saveLocal(locals);
+
+  // Envia ao servidor (se online)
+  pushSave(item);
+
+  closeModal(); renderAll();
+}
+
+function editItem(id)   { openModal(allData.find(d=>d.id===id)); }
+function deleteItem(id) {
+  if(!confirm('Remover esta licitação do painel?')) return;
+  allData = allData.filter(d=>d.id!==id);
+  saveLocal(localItems().filter(i=>i.id!==id));
+  renderAll();
+}
+
+// ══════════════════════════════════════════════
+// PÓS-PREGÃO
+// ══════════════════════════════════════════════
+let _ppId = null;
+
+const PP_STATUS_MAP = {
+  ganho:        'ganho',
+  perdido:      'perdido',
+  recurso:      'recurso',
+  contrarrazao: 'recurso',
+};
+
+const PP_BADGE = {
+  ganho:        { cls:'pos-badge-ganho',       label:'🏆 Ganho' },
+  perdido:      { cls:'pos-badge-perdido',      label:'✕ Perdido' },
+  hab:          { cls:'pos-badge-hab',          label:'🔍 Ag. Habilitação' },
+  recurso:      { cls:'pos-badge-recurso',      label:'⚖️ Recurso' },
+  contrarrazao: { cls:'pos-badge-contrarrazao', label:'📝 Contrarrazão' },
+};
+
+function posBadgeHTML(item) {
+  const r = item.pos_licitacao && item.pos_licitacao.resultado;
+  if (!r || !PP_BADGE[r]) return '';
+  const b = PP_BADGE[r];
+  return `<span class="chip ${b.cls}" style="cursor:pointer" onclick="openPP(${item.id})" title="Ver Pós-Pregão">${b.label}</span>`;
+}
+
+function openPP(id) {
+  _ppId = id;
+  const item = allData.find(d => d.id === id);
+  if (!item) return;
+  const p = item.pos_licitacao || {};
+  document.getElementById('pp-title').textContent    = item.city;
+  document.getElementById('pp-subtitle').textContent = (P_SHORT[item.portal] || item.portal) + ' • ' + fmtDate(item.date);
+  document.getElementById('pp-resultado').value      = p.resultado      || '';
+  document.getElementById('pp-valor-adj').value      = p.valor_adj      || '';
+  document.getElementById('pp-empresa').value        = p.empresa        || '';
+  document.getElementById('pp-motivo').value         = p.motivo         || '';
+  document.getElementById('pp-prazo-hab').value       = p.prazo_hab      || '';
+  document.getElementById('pp-data-recurso').value   = p.data_recurso   || '';
+  document.getElementById('pp-prazo-analise').value  = p.prazo_analise  || '';
+  document.getElementById('pp-fundamento').value     = p.fundamento     || '';
+  document.getElementById('pp-obs-pos').value        = p.obs_pos        || '';
+  document.getElementById('pp-save-st').textContent  = '';
+  ppToggleFields();
+  document.getElementById('pp-modal').classList.add('open');
+}
+
+function closePP() {
+  document.getElementById('pp-modal').classList.remove('open');
+  _ppId = null;
+}
+
+function ppOutside(e) { if (e.target.id === 'pp-modal') closePP(); }
+
+function ppToggleFields() {
+  const r = document.getElementById('pp-resultado').value;
+  const show = (id, visible) => {
+    document.getElementById(id).style.display = visible ? '' : 'none';
+  };
+  show('pp-f-valor',     r === 'ganho');
+  show('pp-f-prazo-hab', r === 'hab');
+  show('pp-f-empresa',   r === 'perdido');
+  show('pp-f-motivo',    r === 'perdido');
+  show('pp-sec-recurso', r === 'recurso' || r === 'contrarrazao');
+}
+
+function savePP() {
+  const item = allData.find(d => d.id === _ppId);
+  if (!item) return;
+  const r = document.getElementById('pp-resultado').value;
+  item.pos_licitacao = {
+    resultado:    r,
+    valor_adj:    document.getElementById('pp-valor-adj').value.trim(),
+    prazo_hab:    document.getElementById('pp-prazo-hab').value,
+    empresa:      document.getElementById('pp-empresa').value.trim(),
+    motivo:       document.getElementById('pp-motivo').value.trim(),
+    data_recurso: document.getElementById('pp-data-recurso').value,
+    prazo_analise:document.getElementById('pp-prazo-analise').value,
+    fundamento:   document.getElementById('pp-fundamento').value.trim(),
+    obs_pos:      document.getElementById('pp-obs-pos').value.trim(),
+  };
+  // Sincroniza status principal
+  if (PP_STATUS_MAP[r]) item.status = PP_STATUS_MAP[r];
+
+  const locals = localItems().filter(i => i.key !== item.key);
+  locals.push(item);
+  saveLocal(locals);
+  pushSave(item);
+
+  const el = document.getElementById('pp-save-st');
+  el.textContent = '✓ Salvo'; el.className = 'cl-save-st saved';
+  renderAll();
+  setTimeout(closePP, 700);
+}
+
+// ══════════════════════════════════════════════
+// CHECKLIST
+// ══════════════════════════════════════════════
+const DEFAULT_STEPS = [
+  { id:1, label:'Pesquisa de preços e viabilidade econômica',      done:false, note:'' },
+  { id:2, label:'Consulta de fornecedores e preço de custo',       done:false, note:'' },
+  { id:3, label:'Análise de margem de lucro',                      done:false, note:'' },
+  { id:4, label:'Verificação de prazo e condições de entrega',     done:false, note:'' },
+  { id:5, label:'Avaliação do histórico de pagamento do órgão',    done:false, note:'' },
+  { id:6, label:'Análise da documentação necessária',              done:false, note:'' },
+  { id:7, label:'Planilha de preços calculada e finalizada',       done:false, note:'' },
+  { id:8, label:'Proposta inserida no portal',                     done:false, note:'' },
+];
+
+let _clId    = null;
+let _clTimer = null;
+
+function _getSteps(item) {
+  if (item.steps && item.steps.length) return JSON.parse(JSON.stringify(item.steps));
+  return JSON.parse(JSON.stringify(DEFAULT_STEPS));
+}
+
+function stepProgressHTML(item) {
+  const steps = _getSteps(item);
+  const done  = steps.filter(s => s.done).length;
+  const total = steps.length;
+  const pct   = Math.round(done / total * 100);
+  const cls   = done === total ? 'prog-done' : done > 0 ? 'prog-partial' : 'prog-none';
+  return `<div class="prog-wrap ${cls}" onclick="event.stopPropagation();openChecklist(${item.id})" title="Ver checklist de etapas">
+    <span class="prog-count">${done}/${total}</span>
+    <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+  </div>`;
+}
+
+function openChecklist(id) {
+  _clId = id;
+  const item = allData.find(d => d.id === id);
+  if (!item) return;
+  document.getElementById('cl-title').textContent    = item.city;
+  document.getElementById('cl-subtitle').textContent = (P_SHORT[item.portal] || item.portal) + ' • ' + fmtDate(item.date);
+  _renderClSteps(item);
+  document.getElementById('cl-modal').classList.add('open');
+}
+
+function closeChecklist() {
+  document.getElementById('cl-modal').classList.remove('open');
+  _clId = null;
+}
+
+function clOutside(e) { if (e.target.id === 'cl-modal') closeChecklist(); }
+
+function _renderClSteps(item) {
+  const steps = _getSteps(item);
+  const done  = steps.filter(s => s.done).length;
+  const total = steps.length;
+  document.getElementById('cl-fill').style.width      = Math.round(done / total * 100) + '%';
+  document.getElementById('cl-prog-lbl').textContent  = done + '/' + total + ' etapas concluídas';
+
+  document.getElementById('cl-steps').innerHTML = steps.map((s, i) => `
+    <div class="cl-step${s.done ? ' done' : ''}" id="cls-${s.id}">
+      <div class="cl-step-row" onclick="toggleStep(${s.id})">
+        <div class="cl-check">${s.done ? '✓' : ''}</div>
+        <span class="cl-step-label">${s.label}</span>
+        <span class="cl-step-num">${i + 1}</span>
+      </div>
+      <div class="cl-note-wrap">
+        <textarea id="cln-${s.id}"
+          placeholder="Anotação — onde parei, observações..."
+          onclick="event.stopPropagation()"
+          onchange="updateStepNote(${s.id}, this.value)">${s.note || ''}</textarea>
+      </div>
+    </div>`).join('');
+}
+
+function toggleStep(stepId) {
+  const item = allData.find(d => d.id === _clId);
+  if (!item) return;
+  if (!item.steps || !item.steps.length) item.steps = JSON.parse(JSON.stringify(DEFAULT_STEPS));
+  const step = item.steps.find(s => s.id === stepId);
+  if (step) step.done = !step.done;
+  _renderClSteps(item);
+  renderAll();
+  _scheduleClSave(item);
+}
+
+function updateStepNote(stepId, val) {
+  const item = allData.find(d => d.id === _clId);
+  if (!item) return;
+  if (!item.steps || !item.steps.length) item.steps = JSON.parse(JSON.stringify(DEFAULT_STEPS));
+  const step = item.steps.find(s => s.id === stepId);
+  if (step) step.note = val;
+  _scheduleClSave(item);
+}
+
+function _scheduleClSave(item) {
+  const el = document.getElementById('cl-save-st');
+  if (el) { el.textContent = 'Salvando…'; el.className = 'cl-save-st'; }
+  if (_clTimer) clearTimeout(_clTimer);
+  _clTimer = setTimeout(() => {
+    const locals = localItems().filter(i => i.key !== item.key);
+    locals.push(item);
+    saveLocal(locals);
+    pushSave(item);
+    if (el) { el.textContent = '✓ Salvo'; el.className = 'cl-save-st saved'; }
+  }, 700);
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+(function init() {
+  const d = new Date();
+  document.getElementById('today-pill').textContent =
+    `${DAYS[d.getDay()]}, ${String(d.getDate()).padStart(2,'0')} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+
+  // Verifica se Claude AI está configurado
+  fetch(`${API}/api/config`, { signal: AbortSignal.timeout(2000) })
+    .then(r => r.json())
+    .then(cfg => { hasClaude = !!cfg.has_claude; })
+    .catch(() => {});
+
+  fetchData(true);
+})();
+</script>
+</body>
+</html>
