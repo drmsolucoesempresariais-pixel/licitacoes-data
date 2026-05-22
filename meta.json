@@ -233,31 +233,31 @@
       {
         "id": 1,
         "label": "Pesquisa de preços e viabilidade econômica",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 2,
         "label": "Consulta de fornecedores e preço de custo",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 3,
         "label": "Análise de margem de lucro",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 5,
         "label": "Avaliação do histórico de pagamento do órgão",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
