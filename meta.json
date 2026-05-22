@@ -47,13 +47,13 @@
       {
         "id": 5,
         "label": "Avaliação do histórico de pagamento do órgão",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
         "id": 6,
         "label": "Análise da documentação necessária",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
