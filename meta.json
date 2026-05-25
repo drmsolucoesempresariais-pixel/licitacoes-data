@@ -316,7 +316,7 @@
       {
         "id": 6,
         "label": "Análise da documentação necessária",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
@@ -328,7 +328,7 @@
       {
         "id": 8,
         "label": "Proposta inserida no portal",
-        "done": true,
+        "done": false,
         "note": ""
       }
     ],
