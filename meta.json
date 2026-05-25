@@ -292,7 +292,7 @@
       {
         "id": 2,
         "label": "Consulta de fornecedores e preço de custo",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
