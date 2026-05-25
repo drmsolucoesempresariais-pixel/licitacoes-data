@@ -22,7 +22,6 @@
     "_local": false
   },
   "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS": {
-    "key": "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS",
     "city": "Valente",
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-26",
@@ -58,7 +57,7 @@
       {
         "id": 5,
         "label": "Avaliação do histórico de pagamento do órgão",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
@@ -80,8 +79,7 @@
         "note": ""
       }
     ],
-    "pos_licitacao": {},
-    "folder": "VALENTE- 26-05 COMPRAS PUBLICAS"
+    "pos_licitacao": {}
   },
   "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05": {
     "key": "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05",
