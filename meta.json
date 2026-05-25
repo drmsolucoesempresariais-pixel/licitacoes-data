@@ -279,9 +279,20 @@
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-25",
     "status": "ganho",
-    "valor": "",
     "objeto": "",
+    "valor": "",
     "obs": "",
-    "_local": false
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   }
 }
