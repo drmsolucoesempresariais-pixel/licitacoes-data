@@ -267,10 +267,21 @@
     "city": "Santo António Do Monte",
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-20",
-    "status": "andamento",
-    "valor": "",
+    "status": "habilitacao",
     "objeto": "Informática",
+    "valor": "",
     "obs": "",
-    "_local": false
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   }
 }
