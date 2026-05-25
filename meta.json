@@ -316,8 +316,8 @@
       {
         "id": 6,
         "label": "Análise da documentação necessária",
-        "done": false,
-        "note": ""
+        "done": true,
+        "note": "ok"
       },
       {
         "id": 7,
