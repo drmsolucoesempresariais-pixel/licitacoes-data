@@ -69,7 +69,17 @@
         "note": ""
       }
     ],
-    "pos_licitacao": {}
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   },
   "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS": {
     "city": "Valente",
