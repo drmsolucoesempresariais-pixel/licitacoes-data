@@ -304,7 +304,7 @@
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
@@ -316,7 +316,7 @@
       {
         "id": 6,
         "label": "Análise da documentação necessária",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
@@ -328,7 +328,7 @@
       {
         "id": 8,
         "label": "Proposta inserida no portal",
-        "done": false,
+        "done": true,
         "note": ""
       }
     ],
