@@ -246,22 +246,11 @@
     "city": "Itapevi",
     "portal": "BBMNET",
     "date": "2026-05-19",
-    "status": "habilitacao",
-    "objeto": "Mobiliário",
+    "status": "andamento",
     "valor": "",
+    "objeto": "Mobiliário",
     "obs": "",
-    "steps": [],
-    "pos_licitacao": {
-      "resultado": "hab",
-      "valor_adj": "",
-      "prazo_hab": "2026-05-26",
-      "empresa": "",
-      "motivo": "",
-      "data_recurso": "",
-      "prazo_analise": "",
-      "fundamento": "",
-      "obs_pos": ""
-    }
+    "_local": false
   },
   "PORTAL DE COMPRAS PUBLICAS|SANTO ANTÓNIO DO MONTE - 20-05": {
     "city": "Santo António Do Monte",
