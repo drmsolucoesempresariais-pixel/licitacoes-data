@@ -275,5 +275,26 @@
       "fundamento": "",
       "obs_pos": ""
     }
+  },
+  "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 25-05": {
+    "city": "Atibaia",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2026-05-25",
+    "status": "enviado",
+    "objeto": "",
+    "valor": "",
+    "obs": "",
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   }
 }
