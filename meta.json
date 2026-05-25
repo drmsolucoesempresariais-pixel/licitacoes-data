@@ -292,19 +292,19 @@
       {
         "id": 2,
         "label": "Consulta de fornecedores e preço de custo",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 3,
         "label": "Análise de margem de lucro",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
