@@ -16,10 +16,21 @@
     "portal": "BBMNET",
     "date": "2026-05-22",
     "status": "ganho",
-    "valor": "",
     "objeto": "Informática",
+    "valor": "",
     "obs": "",
-    "_local": false
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   },
   "PORTAL DE COMPRAS PUBLICAS|VALENTE- 26-05 COMPRAS PUBLICAS": {
     "city": "Valente",
