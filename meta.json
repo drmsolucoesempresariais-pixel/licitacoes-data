@@ -292,25 +292,25 @@
       {
         "id": 2,
         "label": "Consulta de fornecedores e preço de custo",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
         "id": 3,
         "label": "Análise de margem de lucro",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
         "id": 5,
         "label": "Avaliação do histórico de pagamento do órgão",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
