@@ -278,70 +278,10 @@
     "city": "Atibaia",
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-25",
-    "status": "enviado",
-    "objeto": "",
+    "status": "ganho",
     "valor": "",
+    "objeto": "",
     "obs": "",
-    "steps": [
-      {
-        "id": 1,
-        "label": "Pesquisa de preços e viabilidade econômica",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 2,
-        "label": "Consulta de fornecedores e preço de custo",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 3,
-        "label": "Análise de margem de lucro",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 4,
-        "label": "Verificação de prazo e condições de entrega",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 5,
-        "label": "Avaliação do histórico de pagamento do órgão",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 6,
-        "label": "Análise da documentação necessária",
-        "done": true,
-        "note": "ok"
-      },
-      {
-        "id": 7,
-        "label": "Planilha de preços calculada e finalizada",
-        "done": true,
-        "note": ""
-      },
-      {
-        "id": 8,
-        "label": "Proposta inserida no portal",
-        "done": true,
-        "note": ""
-      }
-    ],
-    "pos_licitacao": {
-      "resultado": "hab",
-      "valor_adj": "",
-      "prazo_hab": "",
-      "empresa": "",
-      "motivo": "",
-      "data_recurso": "",
-      "prazo_analise": "",
-      "fundamento": "",
-      "obs_pos": ""
-    }
+    "_local": false
   }
 }
