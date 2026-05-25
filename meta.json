@@ -262,5 +262,26 @@
       "fundamento": "",
       "obs_pos": ""
     }
+  },
+  "PORTAL DE COMPRAS PUBLICAS|SANTO ANTÓNIO DO MONTE - 20-05": {
+    "city": "Santo António Do Monte",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2026-05-20",
+    "status": "habilitacao",
+    "objeto": "",
+    "valor": "",
+    "obs": "",
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   }
 }
