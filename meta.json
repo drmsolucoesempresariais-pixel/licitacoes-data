@@ -241,5 +241,26 @@
       }
     ],
     "pos_licitacao": {}
+  },
+  "BBMNET|ITAPEVI - 19-05- BBMNET": {
+    "city": "Itapevi",
+    "portal": "BBMNET",
+    "date": "2026-05-19",
+    "status": "habilitacao",
+    "objeto": "Mobiliário",
+    "valor": "",
+    "obs": "",
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "2026-05-26",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   }
 }
