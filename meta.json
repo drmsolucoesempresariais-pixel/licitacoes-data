@@ -253,5 +253,15 @@
       "fundamento": "",
       "obs_pos": ""
     }
+  },
+  "PORTAL PRÓPRIOS|SÃO CAETANO DO SUL - 21-05 -  PORTAL PROPRIO DA PREF": {
+    "city": "São Caetano Do Sul",
+    "portal": "OUTRO",
+    "date": "2026-05-21",
+    "status": "republicar",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
