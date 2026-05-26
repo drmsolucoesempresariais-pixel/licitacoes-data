@@ -180,16 +180,25 @@
     "_local": false
   },
   "BBMNET|CERQUEIRA CEZAR - 26-05 BBMNET": {
-    "key": "BBMNET|CERQUEIRA CEZAR - 26-05 BBMNET",
     "city": "Cerqueira Cezar",
     "portal": "BBMNET",
     "date": "2026-05-26",
     "status": "andamento",
-    "valor": "",
     "objeto": "",
+    "valor": "",
     "obs": "",
-    "folder": "CERQUEIRA CEZAR - 26-05 BBMNET",
-    "_local": false
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   },
   "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO": {
     "key": "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO",
