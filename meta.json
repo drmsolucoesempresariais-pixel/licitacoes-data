@@ -26,21 +26,10 @@
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-26",
     "status": "andamento",
-    "objeto": "",
     "valor": "",
-    "obs": "Ag. Habilitação",
-    "steps": [],
-    "pos_licitacao": {
-      "resultado": "hab",
-      "valor_adj": "",
-      "prazo_hab": "",
-      "empresa": "",
-      "motivo": "",
-      "data_recurso": "",
-      "prazo_analise": "",
-      "fundamento": "",
-      "obs_pos": ""
-    }
+    "objeto": "",
+    "obs": "7° lugar",
+    "_local": false
   },
   "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05": {
     "key": "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05",
