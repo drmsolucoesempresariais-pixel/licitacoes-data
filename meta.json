@@ -216,22 +216,11 @@
     "city": "Guarulhos",
     "portal": "COMPRASNET",
     "date": "2026-05-25",
-    "status": "andamento",
-    "objeto": "",
+    "status": "habilitacao",
     "valor": "",
+    "objeto": "",
     "obs": "",
-    "steps": [],
-    "pos_licitacao": {
-      "resultado": "hab",
-      "valor_adj": "",
-      "prazo_hab": "",
-      "empresa": "",
-      "motivo": "",
-      "data_recurso": "",
-      "prazo_analise": "",
-      "fundamento": "",
-      "obs_pos": ""
-    }
+    "_local": false
   },
   "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 25-05": {
     "city": "Atibaia",
