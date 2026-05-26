@@ -26,10 +26,21 @@
     "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-05-26",
     "status": "andamento",
-    "valor": "",
     "objeto": "",
-    "obs": "Estamos em 3° lote 9",
-    "_local": false
+    "valor": "",
+    "obs": "",
+    "steps": [],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   },
   "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05": {
     "key": "PORTAL DE COMPRAS PUBLICAS|ATIBAIA - 22-05",
