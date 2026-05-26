@@ -184,21 +184,10 @@
     "portal": "BBMNET",
     "date": "2026-05-26",
     "status": "andamento",
-    "objeto": "",
     "valor": "",
-    "obs": "",
-    "steps": [],
-    "pos_licitacao": {
-      "resultado": "hab",
-      "valor_adj": "",
-      "prazo_hab": "",
-      "empresa": "",
-      "motivo": "",
-      "data_recurso": "",
-      "prazo_analise": "",
-      "fundamento": "",
-      "obs_pos": ""
-    }
+    "objeto": "",
+    "obs": "4° lugar",
+    "_local": false
   },
   "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO": {
     "key": "JA|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO",
