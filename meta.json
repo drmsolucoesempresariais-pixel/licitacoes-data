@@ -329,5 +329,15 @@
     "objeto": "",
     "obs": "",
     "_local": false
+  },
+  "RECENTE|CERQUEIRA CEZAR - 26-05 BBMNET": {
+    "city": "Cerqueira Cezar",
+    "portal": "BBMNET",
+    "date": "2027-05-26",
+    "status": "habilitacao",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
