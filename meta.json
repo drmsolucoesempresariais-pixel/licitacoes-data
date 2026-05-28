@@ -369,5 +369,15 @@
     "objeto": "",
     "obs": "",
     "_local": false
+  },
+  "RECENTE|ATIBAIA - 25-05": {
+    "city": "Atibaia",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2027-05-25",
+    "status": "ganho",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
