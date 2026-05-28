@@ -359,5 +359,15 @@
     "objeto": "",
     "obs": "",
     "_local": false
+  },
+  "RECENTE|PENITENCIARIA - COMPRASNET - 05-05": {
+    "city": "Penitenciaria",
+    "portal": "",
+    "date": "2027-05-05",
+    "status": "recurso",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
