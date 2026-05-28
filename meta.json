@@ -422,9 +422,9 @@
   },
   "RECENTE|GUARULHOS 25-05": {
     "city": "Guarulhos",
-    "portal": "",
+    "portal": "COMPRASNET",
     "date": "",
-    "status": "andamento",
+    "status": "habilitacao",
     "valor": "",
     "objeto": "",
     "obs": "",
