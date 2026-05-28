@@ -349,5 +349,15 @@
     "objeto": "",
     "obs": "",
     "_local": false
+  },
+  "RECENTE|ITAPEVI - 19-05- BBMNET": {
+    "city": "Itapevi",
+    "portal": "BBMNET",
+    "date": "2027-05-19",
+    "status": "habilitacao",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
