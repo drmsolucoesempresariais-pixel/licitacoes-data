@@ -285,13 +285,13 @@
       {
         "id": 3,
         "label": "Análise de margem de lucro",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
