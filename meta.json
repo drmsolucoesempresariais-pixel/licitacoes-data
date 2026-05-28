@@ -379,5 +379,15 @@
     "objeto": "",
     "obs": "",
     "_local": false
+  },
+  "RECENTE|IRAI - 18-05 - PERDIDO": {
+    "city": "Irai",
+    "portal": "",
+    "date": "2027-05-18",
+    "status": "perdido",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
