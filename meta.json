@@ -319,5 +319,15 @@
         "note": ""
       }
     ]
+  },
+  "RECENTE|ITAPEVI - 22-05 - PERDIDO": {
+    "city": "Itapevi",
+    "portal": "",
+    "date": "2027-05-22",
+    "status": "perdido",
+    "valor": "",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
