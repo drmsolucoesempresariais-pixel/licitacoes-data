@@ -406,12 +406,12 @@
   },
   "RECENTE|VALENTE- 26-05 COMPRAS PUBLICAS": {
     "city": "Valente",
-    "portal": "",
+    "portal": "BBMNET",
     "date": "2027-05-29",
     "status": "recurso",
     "valor": "",
     "objeto": "",
-    "obs": "",
+    "obs": "RECURSO ENVIADO",
     "_local": false
   },
   "RECENTE|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO": {
