@@ -528,7 +528,7 @@
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
