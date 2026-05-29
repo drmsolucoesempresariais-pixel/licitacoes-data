@@ -488,6 +488,17 @@
         "done": true,
         "note": ""
       }
-    ]
+    ],
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "2026-06-03",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": "Estamos em 2° lugar, aguardar empresa fertela mandar os documentos."
+    }
   }
 }
