@@ -534,7 +534,7 @@
       {
         "id": 5,
         "label": "Avaliação do histórico de pagamento do órgão",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
