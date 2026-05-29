@@ -366,9 +366,9 @@
   },
   "RECENTE|PARACATU - MG - 15-05 - BBMNET - VAI SER REPUPLICADO": {
     "city": "Paracatu",
-    "portal": "",
+    "portal": "BBMNET",
     "date": "2027-05-15",
-    "status": "republicar",
+    "status": "recurso",
     "valor": "",
     "objeto": "",
     "obs": "",
