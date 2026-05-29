@@ -479,7 +479,7 @@
       {
         "id": 7,
         "label": "Planilha de preços calculada e finalizada",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
