@@ -316,9 +316,9 @@
   },
   "RECENTE|PENITENCIARIA - COMPRASNET - 05-05": {
     "city": "Penitenciaria",
-    "portal": "",
+    "portal": "BBMNET",
     "date": "2027-05-05",
-    "status": "recurso",
+    "status": "republicar",
     "valor": "",
     "objeto": "",
     "obs": "",
