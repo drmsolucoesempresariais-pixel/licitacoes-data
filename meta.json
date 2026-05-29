@@ -265,14 +265,64 @@
     "_local": false
   },
   "BBMNET|RIANCHO FRIO 29-05 -INFORMATICA": {
-    "city": "Riancho Frio",
     "portal": "BBMNET",
+    "city": "Riancho Frio",
     "date": "2026-05-29",
     "status": "enviado",
     "valor": "",
     "objeto": "",
     "obs": "",
-    "_local": false
+    "_local": false,
+    "steps": [
+      {
+        "id": 1,
+        "label": "Pesquisa de preços e viabilidade econômica",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 2,
+        "label": "Consulta de fornecedores e preço de custo",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 3,
+        "label": "Análise de margem de lucro",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 4,
+        "label": "Verificação de prazo e condições de entrega",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 5,
+        "label": "Avaliação do histórico de pagamento do órgão",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 6,
+        "label": "Análise da documentação necessária",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 7,
+        "label": "Planilha de preços calculada e finalizada",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 8,
+        "label": "Proposta inserida no portal",
+        "done": false,
+        "note": ""
+      }
+    ]
   },
   "RECENTE|ITAPEVI - 22-05 - PERDIDO": {
     "city": "Itapevi",
