@@ -485,7 +485,7 @@
       {
         "id": 8,
         "label": "Proposta inserida no portal",
-        "done": false,
+        "done": true,
         "note": ""
       }
     ]
