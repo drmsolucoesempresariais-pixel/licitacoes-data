@@ -345,14 +345,25 @@
     "_local": false
   },
   "RECENTE|SANTO ANTÓNIO DO MONTE - 20-05": {
-    "city": "Santo António Do Monte",
     "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "city": "Santo António Do Monte",
     "date": "2027-05-20",
     "status": "habilitacao",
     "valor": "",
     "objeto": "",
     "obs": "",
-    "_local": false
+    "_local": false,
+    "pos_licitacao": {
+      "resultado": "",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   },
   "RECENTE|ITAPEVI - 19-05- BBMNET": {
     "city": "Itapevi",
