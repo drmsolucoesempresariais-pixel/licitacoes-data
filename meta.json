@@ -578,13 +578,13 @@
       {
         "id": 1,
         "label": "Pesquisa de preços e viabilidade econômica",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
         "id": 2,
         "label": "Consulta de fornecedores e preço de custo",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
@@ -596,7 +596,7 @@
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": false,
+        "done": true,
         "note": ""
       },
       {
