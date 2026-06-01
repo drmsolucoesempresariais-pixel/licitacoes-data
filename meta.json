@@ -578,7 +578,7 @@
       {
         "id": 1,
         "label": "Pesquisa de preços e viabilidade econômica",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
