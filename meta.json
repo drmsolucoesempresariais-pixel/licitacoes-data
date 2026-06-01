@@ -578,7 +578,7 @@
       {
         "id": 1,
         "label": "Pesquisa de preços e viabilidade econômica",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
@@ -596,7 +596,7 @@
       {
         "id": 4,
         "label": "Verificação de prazo e condições de entrega",
-        "done": true,
+        "done": false,
         "note": ""
       },
       {
