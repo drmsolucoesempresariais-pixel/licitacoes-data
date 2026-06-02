@@ -372,8 +372,10 @@
     "date": "2027-05-05",
     "status": "recurso",
     "valor": "",
+    "data_sessao": "2026-06-11",
+    "hora_sessao": "",
     "objeto": "",
-    "obs": "",
+    "obs": "Resultado",
     "_local": false
   },
   "RECENTE|ATIBAIA - 25-05": {
