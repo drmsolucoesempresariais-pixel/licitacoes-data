@@ -561,10 +561,12 @@
   },
   "RECENTE|PORTOS DE PARANAGUÁ 29-05-2026": {
     "city": "Portos De Paranaguá",
-    "portal": "",
+    "portal": "BBMNET",
     "date": "2026-05-29",
     "status": "habilitacao",
     "valor": "",
+    "data_sessao": "",
+    "hora_sessao": "",
     "objeto": "",
     "obs": "",
     "_local": false
