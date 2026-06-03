@@ -769,12 +769,16 @@
     "hora_sessao": "09:00"
   },
   "BBMNET|PARACATU - 08-06-2026- SMARTPHONES": {
-    "portal": "BBMNET",
     "city": "Paracatu",
+    "portal": "LICITACOES-E",
     "date": "2026-06-08",
     "status": "andamento",
+    "valor": "",
     "data_sessao": "2026-06-08",
-    "hora_sessao": "09:01"
+    "hora_sessao": "09:01",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   },
   "PORTAL DE COMPRAS PUBLICAS|STO ANTONIO PLANALTO 08-06-2026-NOTEBOOK": {
     "city": "Sto Antonio Planalto",
