@@ -759,5 +759,13 @@
     "objeto": "",
     "obs": "",
     "_local": false
+  },
+  "PORTAL PROPRIOS|PIRACICABA 08-06-2026-BANCOS": {
+    "portal": "PORTAL PROPRIOS",
+    "city": "Piracicaba",
+    "date": "2026-06-08",
+    "status": "andamento",
+    "data_sessao": "2026-06-08",
+    "hora_sessao": "09:00"
   }
 }
