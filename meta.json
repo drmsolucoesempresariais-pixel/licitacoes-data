@@ -745,11 +745,15 @@
     "hora_sessao": "09:01"
   },
   "PORTAL DE COMPRAS PUBLICAS|STO ANTONIO PLANALTO 08-06-2026-NOTEBOOK": {
-    "portal": "PORTAL DE COMPRAS PUBLICAS",
     "city": "Sto Antonio Planalto",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
     "date": "2026-06-08",
-    "status": "habilitacao",
+    "status": "andamento",
+    "valor": "",
     "data_sessao": "2026-06-08",
-    "hora_sessao": "08:30"
+    "hora_sessao": "08:30",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   }
 }
