@@ -668,13 +668,13 @@
     "obs": ""
   },
   "BBMNET|INDAIATUBA - 03-06-2026 - BANCOS": {
-    "city": "Indaiatuba",
     "portal": "BBMNET",
+    "city": "Indaiatuba",
     "date": "2026-06-03",
     "status": "andamento",
     "valor": "",
-    "data_sessao": "",
-    "hora_sessao": "",
+    "data_sessao": "2026-06-03",
+    "hora_sessao": "09:00",
     "objeto": "",
     "obs": "",
     "_local": false
