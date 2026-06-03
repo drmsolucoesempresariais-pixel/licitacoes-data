@@ -648,5 +648,11 @@
     "status": "habilitacao",
     "objeto": "",
     "obs": ""
+  },
+  "RECENTE|VALENTE- 26-05-2026 COMPRAS PUBLICAS": {
+    "valor": "",
+    "status": "recurso",
+    "objeto": "",
+    "obs": "RECURSO ENVIADO"
   }
 }
