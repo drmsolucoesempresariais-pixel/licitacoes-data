@@ -727,5 +727,13 @@
     "objeto": "",
     "obs": "",
     "_local": false
+  },
+  "COMPRASNET|RIO DAS OSTRAS 08-06-2026-TABLETS": {
+    "portal": "COMPRASNET",
+    "city": "Rio Das Ostras",
+    "date": "2026-06-08",
+    "status": "andamento",
+    "data_sessao": "2026-06-08",
+    "hora_sessao": "09:00"
   }
 }
