@@ -735,5 +735,13 @@
     "status": "andamento",
     "data_sessao": "2026-06-08",
     "hora_sessao": "09:00"
+  },
+  "BBMNET|PARACATU - 08-06-2026- SMARTPHONES": {
+    "portal": "BBMNET",
+    "city": "Paracatu",
+    "date": "2026-06-08",
+    "status": "andamento",
+    "data_sessao": "2026-06-08",
+    "hora_sessao": "09:01"
   }
 }
