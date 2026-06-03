@@ -628,12 +628,16 @@
     "_local": false
   },
   "RECENTE|SANTO ANTÓNIO DO MONTE - 20-05-2026": {
-    "obs": "volta na quarta feira (03/06) as 8:30",
+    "city": "Santo António Do Monte",
+    "portal": "PORTAL DE COMPRAS PUBLICAS",
+    "date": "2026-05-20",
+    "status": "habilitacao",
     "valor": "",
-    "objeto": "",
     "data_sessao": "",
     "hora_sessao": "",
-    "status": "habilitacao"
+    "objeto": "",
+    "obs": "volta na quarta feira (03/06) as 8:30",
+    "_local": false
   },
   "RECENTE|ITAPEVI - 19-05-2026- BBMNET": {
     "valor": "",
