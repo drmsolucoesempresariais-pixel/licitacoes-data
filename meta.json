@@ -598,16 +598,12 @@
     "_local": false
   },
   "RECENTE|PENITENCIARIA - COMPRASNET - 05-05-2026": {
-    "city": "Penitenciaria",
-    "portal": "COMPRASNET",
-    "date": "2026-05-05",
-    "status": "recurso",
+    "obs": "Resultado",
     "valor": "",
-    "data_sessao": "",
-    "hora_sessao": "",
     "objeto": "",
-    "obs": "",
-    "_local": false
+    "data_sessao": "2026-06-11",
+    "hora_sessao": "",
+    "status": "recurso"
   },
   "RECENTE|ITAPEVI - 22-05-2026 - PERDIDO": {
     "valor": "",
