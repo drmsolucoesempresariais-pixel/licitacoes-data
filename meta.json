@@ -795,5 +795,13 @@
     "status": "andamento",
     "data_sessao": "2026-06-08",
     "hora_sessao": "09:00"
+  },
+  "BBMNET|BOM JESUS DO GALHO 09-06-2026-INFORMATICA": {
+    "portal": "BBMNET",
+    "city": "Bom Jesus Do Galho",
+    "date": "2026-06-09",
+    "status": "andamento",
+    "data_sessao": "2026-06-09",
+    "hora_sessao": "09:30"
   }
 }
