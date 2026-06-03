@@ -711,5 +711,13 @@
       "fundamento": "",
       "obs_pos": ""
     }
+  },
+  "COMPRASNET|SÃO PAULO 05-06-2026-ESTANTES AÇO": {
+    "portal": "COMPRASNET",
+    "city": "São Paulo",
+    "date": "2026-06-05",
+    "status": "andamento",
+    "data_sessao": "2025-06-05",
+    "hora_sessao": "08:00"
   }
 }
