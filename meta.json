@@ -789,12 +789,16 @@
     "_local": false
   },
   "PORTAL PROPRIOS|PIRACICABA 08-06-2026-BANCOS": {
-    "portal": "PORTAL PROPRIOS",
     "city": "Piracicaba",
+    "portal": "BLL",
     "date": "2026-06-08",
     "status": "andamento",
+    "valor": "",
     "data_sessao": "2026-06-08",
-    "hora_sessao": "09:00"
+    "hora_sessao": "09:00",
+    "objeto": "",
+    "obs": "",
+    "_local": false
   },
   "BBMNET|BOM JESUS DO GALHO 09-06-2026-INFORMATICA": {
     "portal": "BBMNET",
