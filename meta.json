@@ -719,5 +719,13 @@
         "note": ""
       }
     ]
+  },
+  "PORTAL DE COMPRAS PUBLICAS|SEBRAE 02-06-2026": {
+    "obs": "",
+    "valor": "",
+    "objeto": "notebook",
+    "data_sessao": "2026-06-02",
+    "hora_sessao": "09:00",
+    "status": "perdido"
   }
 }
