@@ -654,5 +654,11 @@
     "status": "recurso",
     "objeto": "",
     "obs": "RECURSO ENVIADO"
+  },
+  "RECENTE|PARACATU - MG - 15-05-2026 - BBMNET - VAI SER REPUPLICADO": {
+    "valor": "",
+    "status": "republicar",
+    "objeto": "",
+    "obs": ""
   }
 }
