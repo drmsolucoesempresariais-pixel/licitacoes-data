@@ -672,10 +672,16 @@
     "obs": ""
   },
   "RECENTE|GUARULHOS 25-05-2026": {
+    "city": "Guarulhos",
+    "portal": "",
+    "date": "2026-05-25",
+    "status": "perdido",
     "valor": "",
-    "status": "habilitacao",
+    "data_sessao": "",
+    "hora_sessao": "",
     "objeto": "",
-    "obs": ""
+    "obs": "",
+    "_local": false
   },
   "BBMNET|INDAIATUBA - 03-06-2026 - BANCOS": {
     "portal": "BBMNET",
