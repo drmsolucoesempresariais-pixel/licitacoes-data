@@ -640,10 +640,16 @@
     "_local": false
   },
   "RECENTE|ITAPEVI - 19-05-2026- BBMNET": {
-    "valor": "",
+    "city": "Itapevi",
+    "portal": "BBMNET",
+    "date": "2026-05-19",
     "status": "habilitacao",
+    "valor": "",
+    "data_sessao": "",
+    "hora_sessao": "",
     "objeto": "",
-    "obs": ""
+    "obs": "",
+    "_local": false
   },
   "RECENTE|ATIBAIA - 25-05-2026": {
     "valor": "",
