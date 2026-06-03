@@ -620,5 +620,13 @@
     "status": "habilitacao",
     "objeto": "",
     "obs": ""
+  },
+  "RECENTE|SANTO ANTÓNIO DO MONTE - 20-05-2026": {
+    "obs": "volta na quarta feira (03/06) as 8:30",
+    "valor": "",
+    "objeto": "",
+    "data_sessao": "",
+    "hora_sessao": "",
+    "status": "habilitacao"
   }
 }
