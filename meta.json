@@ -726,10 +726,10 @@
     "date": "2026-06-05",
     "status": "andamento",
     "valor": "",
-    "data_sessao": "2025-06-05",
-    "hora_sessao": "08:00",
     "objeto": "",
     "obs": "",
+    "data_sessao": "2026-06-05",
+    "hora_sessao": "08:00",
     "_local": false
   },
   "COMPRASNET|RIO DAS OSTRAS 08-06-2026-TABLETS": {
