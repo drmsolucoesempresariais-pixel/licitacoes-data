@@ -636,5 +636,11 @@
     "status": "ganho",
     "objeto": "",
     "obs": ""
+  },
+  "RECENTE|IRAI - 18-05-2026 - PERDIDO": {
+    "valor": "",
+    "status": "perdido",
+    "objeto": "",
+    "obs": ""
   }
 }
