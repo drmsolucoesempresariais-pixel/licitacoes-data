@@ -660,5 +660,11 @@
     "status": "republicar",
     "objeto": "",
     "obs": ""
+  },
+  "RECENTE|GUARULHOS 25-05-2026": {
+    "valor": "",
+    "status": "habilitacao",
+    "objeto": "",
+    "obs": ""
   }
 }
