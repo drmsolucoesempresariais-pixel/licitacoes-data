@@ -700,10 +700,10 @@
     "_local": false
   },
   "BBMNET|INDAIATUBA - 03-06-2026 - BANCOS": {
-    "portal": "BBMNET",
     "city": "Indaiatuba",
+    "portal": "BBMNET",
     "date": "2026-06-03",
-    "status": "andamento",
+    "status": "habilitacao",
     "valor": "",
     "data_sessao": "2026-06-03",
     "hora_sessao": "09:00",
