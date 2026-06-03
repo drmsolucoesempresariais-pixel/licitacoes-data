@@ -694,5 +694,22 @@
     "data_sessao": "",
     "hora_sessao": "",
     "status": "habilitacao"
+  },
+  "PORTAL PROPRIOS|PORTOS DO PARANÁ 29-05-2026-MOURAO CONCRETO": {
+    "portal": "PORTAL PROPRIOS",
+    "city": "Portos Do Paraná",
+    "date": "2026-05-29",
+    "status": "andamento",
+    "pos_licitacao": {
+      "resultado": "hab",
+      "valor_adj": "",
+      "prazo_hab": "",
+      "empresa": "",
+      "motivo": "",
+      "data_recurso": "",
+      "prazo_analise": "",
+      "fundamento": "",
+      "obs_pos": ""
+    }
   }
 }
