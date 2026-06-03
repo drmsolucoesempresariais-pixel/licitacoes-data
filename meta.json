@@ -692,12 +692,16 @@
     "status": "perdido"
   },
   "RECENTE|RIANCHO FRIO 29-05-2026 -INFORMATICA": {
-    "obs": "",
+    "city": "Riancho Frio",
+    "portal": "BBMNET",
+    "date": "2026-05-29",
+    "status": "enviado",
     "valor": "",
-    "objeto": "",
     "data_sessao": "",
     "hora_sessao": "",
-    "status": "habilitacao"
+    "objeto": "",
+    "obs": "Aguardando comunicado de retorno de sessão.",
+    "_local": false
   },
   "PORTAL PROPRIOS|PORTOS DO PARANÁ 29-05-2026-MOURAO CONCRETO": {
     "portal": "PORTAL PROPRIOS",
