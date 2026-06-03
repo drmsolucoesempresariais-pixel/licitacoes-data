@@ -616,10 +616,16 @@
     "obs": ""
   },
   "RECENTE|CERQUEIRA CEZAR - 26-05-2026 BBMNET": {
-    "valor": "",
+    "city": "Cerqueira Cezar",
+    "portal": "BBMNET",
+    "date": "2026-05-26",
     "status": "habilitacao",
-    "objeto": "",
-    "obs": ""
+    "valor": "",
+    "data_sessao": "2026-06-12",
+    "hora_sessao": "",
+    "objeto": "Estante",
+    "obs": "aguardando empresa enviar amostra.",
+    "_local": false
   },
   "RECENTE|SANTO ANTÓNIO DO MONTE - 20-05-2026": {
     "obs": "volta na quarta feira (03/06) as 8:30",
