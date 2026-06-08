@@ -664,10 +664,16 @@
     "obs": ""
   },
   "RECENTE|SÃO CAETANO DO SUL - 21-05-2026 -  PORTAL PROPRIO DA PREF": {
+    "city": "São Caetano Do Sul",
+    "portal": "PORTAL PROPRIO",
+    "date": "2026-05-21",
+    "status": "perdido",
     "valor": "",
-    "status": "habilitacao",
+    "data_sessao": "",
+    "hora_sessao": "",
     "objeto": "",
-    "obs": ""
+    "obs": "",
+    "_local": false
   },
   "RECENTE|VALENTE- 26-05-2026 COMPRAS PUBLICAS": {
     "city": "Valente",
