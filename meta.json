@@ -821,5 +821,13 @@
     "objeto": "",
     "obs": "em cotação",
     "_local": false
+  },
+  "PORTAL PROPRIOS|SÃO BERNARDO 09-06-2026-caixa papelao": {
+    "portal": "PORTAL PROPRIOS",
+    "city": "São Bernardo",
+    "date": "2026-06-09",
+    "status": "andamento",
+    "data_sessao": "2026-06-09",
+    "hora_sessao": "09:01"
   }
 }
