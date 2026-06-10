@@ -829,5 +829,61 @@
     "status": "andamento",
     "data_sessao": "2026-06-09",
     "hora_sessao": "09:01"
+  },
+  "BBMNET|VARZEA PAULISTA - 11-06": {
+    "portal": "BBMNET",
+    "city": "Varzea Paulista",
+    "date": "2026-06-11",
+    "status": "andamento",
+    "steps": [
+      {
+        "id": 1,
+        "label": "Pesquisa de preços e viabilidade econômica",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 2,
+        "label": "Consulta de fornecedores e preço de custo",
+        "done": true,
+        "note": ""
+      },
+      {
+        "id": 3,
+        "label": "Análise de margem de lucro",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 4,
+        "label": "Verificação de prazo e condições de entrega",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 5,
+        "label": "Avaliação do histórico de pagamento do órgão",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 6,
+        "label": "Análise da documentação necessária",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 7,
+        "label": "Planilha de preços calculada e finalizada",
+        "done": false,
+        "note": ""
+      },
+      {
+        "id": 8,
+        "label": "Proposta inserida no portal",
+        "done": false,
+        "note": ""
+      }
+    ]
   }
 }
