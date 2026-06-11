@@ -943,5 +943,13 @@
         "note": ""
       }
     ]
+  },
+  "BBMNET|VÁRZEA  12-06 EQUIP.HOSPITALAR": {
+    "portal": "BBMNET",
+    "city": "Várzea",
+    "date": "2026-06-12",
+    "status": "andamento",
+    "data_sessao": "2026-06-12",
+    "hora_sessao": "09:00"
   }
 }
