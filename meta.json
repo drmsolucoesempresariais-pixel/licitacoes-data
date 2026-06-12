@@ -951,5 +951,13 @@
     "status": "andamento",
     "data_sessao": "2026-06-12",
     "hora_sessao": "09:00"
+  },
+  "BBMNET|CABREUVA 16-06-2026": {
+    "portal": "BBMNET",
+    "city": "Cabreuva",
+    "date": "2026-06-16",
+    "status": "andamento",
+    "data_sessao": "2026-06-16",
+    "hora_sessao": "09:00"
   }
 }
