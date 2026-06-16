@@ -959,5 +959,13 @@
     "status": "andamento",
     "data_sessao": "2026-06-16",
     "hora_sessao": "09:00"
+  },
+  "LICITACOES-E|imbituba - 16-06-2026": {
+    "portal": "LICITACOES-E",
+    "city": "Imbituba",
+    "date": "2026-06-16",
+    "status": "andamento",
+    "data_sessao": "2026-06-16",
+    "hora_sessao": "09:00"
   }
 }
