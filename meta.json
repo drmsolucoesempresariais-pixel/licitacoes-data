@@ -975,5 +975,13 @@
     "status": "andamento",
     "data_sessao": "2026-06-29",
     "hora_sessao": "08:30"
+  },
+  "BBMNET|Indaiatuba 03-07": {
+    "portal": "BBMNET",
+    "city": "Indaiatuba",
+    "date": "2026-07-03",
+    "status": "andamento",
+    "data_sessao": "2026-07-03",
+    "hora_sessao": "09:00"
   }
 }
