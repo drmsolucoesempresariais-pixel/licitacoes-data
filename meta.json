@@ -967,5 +967,13 @@
     "status": "andamento",
     "data_sessao": "2026-06-16",
     "hora_sessao": "09:00"
+  },
+  "BBMNET|AMERICANA 29-06": {
+    "portal": "BBMNET",
+    "city": "Americana",
+    "date": "2026-06-29",
+    "status": "andamento",
+    "data_sessao": "2026-06-29",
+    "hora_sessao": "08:30"
   }
 }
