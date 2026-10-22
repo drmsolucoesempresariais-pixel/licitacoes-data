@@ -29,7 +29,20 @@ services:
         value: drmsolucoesempresariais-pixel
       - key: GITHUB_REPO
         value: licitacoes-data
-      # sync: false = o Render pergunta na hora de criar e guarda só lá. O token precisa
-      # de permissão de ESCRITA neste repositório: o painel grava o estado de volta nele.
+      # Client público oficial da Microsoft (o mesmo do robô de custos). Não é segredo.
+      - key: AZURE_CLIENT_ID
+        value: 14d82eec-204b-4c2f-b7e8-296a70dab67e
+      # sync: false = o Render pergunta na hora de criar e guarda só lá.
+      # Precisa de permissão de ESCRITA neste repositório: o painel grava o estado nele.
       - key: GITHUB_TOKEN
+        sync: false
+      # OneDrive — é o que deixa abrir o PDF do edital direto da fonte.
+      - key: AZURE_REFRESH_TOKEN
+        sync: false
+      - key: ONEDRIVE_FOLDER_ID
+        sync: false
+      # Sem esta chave o painel sobe, mas a análise de edital por IA fica DESLIGADA:
+      # /api/config responde has_claude=false e os botões somem da tela. Foi assim que a
+      # versão antiga parecia "o modelo inicial" — faltando função, não quebrada.
+      - key: CLAUDE_API_KEY
         sync: false
