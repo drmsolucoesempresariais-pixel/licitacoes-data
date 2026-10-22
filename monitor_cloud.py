@@ -34,6 +34,10 @@ AZURE_CLIENT_ID      = os.environ.get("AZURE_CLIENT_ID",      "14d82eec-204b-4c2
 AZURE_REFRESH_TOKEN  = os.environ.get("AZURE_REFRESH_TOKEN",  "")
 ONEDRIVE_FOLDER_ID   = os.environ.get("ONEDRIVE_FOLDER_ID",   "")
 CLAUDE_API_KEY       = os.environ.get("CLAUDE_API_KEY",       "")   # habilita análise IA
+# Senha da tela de reconexão do OneDrive. Reconectar pluga uma conta Microsoft neste
+# painel, então sem senha definida a tela fica DESLIGADA — falha fechada de propósito:
+# o painel em si não tem login, e uma tela aberta deixaria qualquer um plugar a conta dele.
+ADMIN_KEY            = os.environ.get("ADMIN_KEY",            "")
 
 HTML_FILE        = Path(__file__).resolve().parent / "PAINEL DE LICITAÇÕES.html"
 REFRESH_INTERVAL = 30    # segundos entre scans do OneDrive
@@ -1033,6 +1037,109 @@ def _schedule():
 
 
 # ════════════════════════════════════════════════════
+# RECONECTAR O ONEDRIVE SEM PC (device code)
+# ════════════════════════════════════════════════════
+# O login da Microsoft vence de tempos em tempos. Até aqui, refazê-lo exigia rodar o
+# setup_auth.py no computador: instalar requests, abrir navegador, subir um servidor local
+# na porta certa. Quando isso não funciona — e já não funcionou antes — o painel fica
+# parado sem saída. O "device code" é o mesmo jeito de conectar uma TV: a tela mostra um
+# código, a pessoa digita no celular e pronto.
+_DEVICE_GRANT  = "urn:ietf:params:oauth:grant-type:device_code"
+_DEVICE_URL    = "https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode"
+_device_atual  = {}
+
+
+def _post_form(url: str, campos: dict) -> dict:
+    req = urllib.request.Request(
+        url, data=urllib.parse.urlencode(campos).encode(),
+        headers={"Content-Type": "application/x-www-form-urlencoded"}, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        try:
+            return json.loads(e.read())
+        except Exception:
+            return {"error": f"http_{e.code}", "error_description": str(e.reason)}
+    except Exception as e:
+        return {"error": "rede", "error_description": str(e)[:200]}
+
+
+def iniciar_device_code() -> dict:
+    d = _post_form(_DEVICE_URL, {"client_id": AZURE_CLIENT_ID,
+                                 "scope": "Files.Read offline_access"})
+    if not d.get("device_code"):
+        return {"ok": False, "erro": str(d.get("error_description") or d)[:300]}
+    _device_atual.clear()
+    _device_atual.update(d)
+    return {"ok": True, "user_code": d.get("user_code", ""),
+            "url": d.get("verification_uri") or "https://microsoft.com/devicelogin",
+            "expira_em": int(d.get("expires_in") or 900),
+            "intervalo": int(d.get("interval") or 5)}
+
+
+def concluir_device_code() -> dict:
+    if not _device_atual.get("device_code"):
+        return {"ok": False, "erro": "nenhuma conexão em andamento — comece de novo"}
+    tok = _post_form(OneDriveClient.TOKEN_URL,
+                     {"grant_type": _DEVICE_GRANT, "client_id": AZURE_CLIENT_ID,
+                      "device_code": _device_atual["device_code"]})
+    if tok.get("error") in ("authorization_pending", "slow_down"):
+        return {"ok": False, "pendente": True}
+    if not tok.get("refresh_token"):
+        return {"ok": False, "erro": str(tok.get("error_description") or tok)[:300]}
+    _device_atual.clear()
+    # Guarda no disco E passa a valer agora, sem esperar reinício. A variável de ambiente
+    # fica para trás de propósito: o guardado é mais novo, e é ele que o boot vai reler.
+    onedrive._refresh_token = tok["refresh_token"]
+    onedrive._access_token  = tok.get("access_token")
+    onedrive._token_expires = time.time() + tok.get("expires_in", 3600) - 60
+    onedrive._guardar_token(tok["refresh_token"])
+    try:
+        refresh()
+    except Exception as e:
+        print(f"  [OneDrive] reconectado, mas a leitura falhou: {e}", flush=True)
+    return {"ok": True, "refresh_token": tok["refresh_token"]}
+
+
+_PAGINA_ONEDRIVE = """<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reconectar OneDrive</title><style>
+body{background:#191919;color:#f2f2f2;font-family:system-ui,sans-serif;margin:0;padding:24px;line-height:1.7}
+.c{max-width:560px;margin:0 auto}h1{font-size:1.1rem;margin:0 0 4px}
+.m{color:#888;font-size:.85rem}button{background:#f0b429;color:#1a1a1a;border:0;border-radius:8px;
+padding:12px 20px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:16px}
+code{font-size:1.6rem;letter-spacing:.14em;background:#2b2b2b;padding:6px 12px;border-radius:8px;
+display:inline-block;margin:6px 0}a{color:#f0b429}#r{margin-top:18px}</style></head><body><div class="c">
+<h1>Reconectar o OneDrive</h1>
+<div class="m">Use a conta Microsoft dona das pastas de licitação.</div>
+<button onclick="ir()">Começar</button><div id="r"></div></div><script>
+const k=new URLSearchParams(location.search).get('k')||'';
+let t=null;
+async function ir(){
+  const r=document.getElementById('r'); r.textContent='pedindo o código à Microsoft...';
+  if(t){clearInterval(t);t=null;}
+  let d; try{ d=await (await fetch('/api/onedrive/conectar?k='+encodeURIComponent(k),{method:'POST'})).json(); }
+  catch(e){ r.textContent='falhou: '+e; return; }
+  if(!d.ok){ r.textContent="\u274c "+(d.erro||'nao consegui comecar'); return; }
+  r.innerHTML='<b>1.</b> Abra <a href="'+d.url+'" target="_blank" rel="noopener">'+d.url+'</a><br>'
+    +'<b>2.</b> Digite este codigo:<br><code>'+d.user_code+'</code><br>'
+    +'<b>3.</b> Entre com a conta da DRM.<br><span id="s" class="m">Esperando voce entrar...</span>';
+  const fim=Date.now()+(d.expira_em||900)*1000;
+  t=setInterval(async()=>{
+    if(Date.now()>fim){clearInterval(t);t=null;document.getElementById('s').textContent='O codigo expirou. Toque em Comecar de novo.';return;}
+    let x; try{ x=await (await fetch('/api/onedrive/concluir?k='+encodeURIComponent(k),{method:'POST'})).json(); }catch(e){ return; }
+    if(x.pendente) return;
+    clearInterval(t); t=null;
+    r.innerHTML = x.ok
+      ? '\u2705 <b>OneDrive reconectado.</b><br>O token ficou guardado no disco \u2014 voce nao precisa colar em lugar nenhum.<br>Pode fechar e abrir o painel.'
+      : '\u274c '+(x.erro||'nao consegui concluir');
+  },Math.max(5,d.intervalo||5)*1000);
+}
+</script></body></html>"""
+
+
+# ════════════════════════════════════════════════════
 # HTTP HANDLER
 # ════════════════════════════════════════════════════
 class Handler(BaseHTTPRequestHandler):
@@ -1045,10 +1152,29 @@ class Handler(BaseHTTPRequestHandler):
         self._cors()
         self.end_headers()
 
+    def _admin_ok(self) -> bool:
+        """Falha fechada: sem ADMIN_KEY definida, a tela de reconexão não existe."""
+        if not ADMIN_KEY:
+            return False
+        q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+        return (q.get("k") or [""])[0] == ADMIN_KEY
+
     def do_GET(self):
         p = self.path.split("?")[0]
 
-        if p == "/api/data":
+        if p == "/onedrive":
+            if not self._admin_ok():
+                self.send_error(404)       # 404, não 403: não anuncia que a tela existe
+                return
+            corpo = _PAGINA_ONEDRIVE.encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", len(corpo))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(corpo)
+
+        elif p == "/api/data":
             with _lock:
                 payload = dict(_state)
             self._json(payload)
@@ -1118,7 +1244,15 @@ class Handler(BaseHTTPRequestHandler):
         n    = int(self.headers.get("Content-Length", 0))
         body = self.rfile.read(n)
 
-        if p == "/api/save":
+        if p == "/api/onedrive/conectar":
+            self._json(iniciar_device_code() if self._admin_ok()
+                       else {"ok": False, "erro": "defina ADMIN_KEY no servidor"})
+
+        elif p == "/api/onedrive/concluir":
+            self._json(concluir_device_code() if self._admin_ok()
+                       else {"ok": False, "erro": "defina ADMIN_KEY no servidor"})
+
+        elif p == "/api/save":
             try:
                 payload = json.loads(body)
                 # O painel pode mandar um objeto único ou uma lista com um item.
@@ -1199,10 +1333,17 @@ class Handler(BaseHTTPRequestHandler):
 # MAIN
 # ════════════════════════════════════════════════════
 if __name__ == "__main__":
-    if not AZURE_CLIENT_ID or not AZURE_REFRESH_TOKEN or not ONEDRIVE_FOLDER_ID:
-        print("ERRO: Defina AZURE_CLIENT_ID, AZURE_REFRESH_TOKEN e ONEDRIVE_FOLDER_ID nas variáveis de ambiente.")
-        print("      Execute setup_auth.py uma vez no seu PC para obter esses valores.")
-        sys.exit(1)
+    # Sem credencial do OneDrive o painel SOBE assim mesmo, sem as licitações. Antes ele
+    # morria aqui — e isso criava um beco sem saída: a tela que reconecta a conta mora
+    # dentro deste servidor, então um token vencido impedia de subir o servidor que
+    # conserta o token vencido. Subir avisando é melhor que não subir.
+    if not AZURE_CLIENT_ID or not ONEDRIVE_FOLDER_ID or not (
+            AZURE_REFRESH_TOKEN or OneDriveClient.TOKEN_FILE.exists()):
+        print("  ⚠️  OneDrive não configurado — o painel sobe, mas sem licitações.", flush=True)
+        if ADMIN_KEY:
+            print("      Reconecte em /onedrive?k=SUA_ADMIN_KEY (não precisa de PC).", flush=True)
+        else:
+            print("      Defina ADMIN_KEY no servidor para liberar a tela /onedrive.", flush=True)
 
     print("╔══════════════════════════════════════════════╗")
     print("║   Monitor de Licitações — Servidor Cloud     ║")

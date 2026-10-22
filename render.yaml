@@ -56,3 +56,8 @@ services:
       # versão antiga parecia "o modelo inicial" — faltando função, não quebrada.
       - key: CLAUDE_API_KEY
         sync: false
+      # Senha da tela /onedrive, que reconecta a conta Microsoft sem PC. Sem ela a tela
+      # responde 404 — o painel não tem login, e uma tela aberta deixaria qualquer um
+      # plugar a conta dele aqui. Invente uma senha qualquer.
+      - key: ADMIN_KEY
+        sync: false
