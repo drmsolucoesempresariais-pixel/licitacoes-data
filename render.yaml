@@ -1,0 +1,35 @@
+# Receita do servidor (Render Blueprint). O Render lê este arquivo e monta o serviço
+# sozinho — sem configurar nada na tela.
+#
+# Plano pago, não o gratuito: o painel não é só um site que responde quando alguém abre.
+# Ele relê o GitHub a cada 2 minutos num timer próprio (REFRESH_INTERVAL), e servidor que
+# hiberna sem visita para esse relógio — os dados ficariam velhos sem ninguém perceber.
+#
+# Sem disco, de propósito: o estado deste painel mora no próprio repositório do GitHub
+# (state.json, state_hist.json, meta.json, gravados pela API de conteúdo). Então não há
+# nada em arquivo local que precise sobreviver a um restart.
+services:
+  - type: web
+    name: painel-licitacoes
+    runtime: python
+    plan: 0.5c-512mb      # 0,5 CPU / 512 MB, sempre ligado. "free" hiberna em 15 min.
+    region: virginia      # a mesma do drm-custos-obra
+    buildCommand: pip install -r requirements.txt   # o arquivo não tem dependência nenhuma
+    startCommand: python monitor_cloud.py
+    # /api/ping é barato: devolve só a hora da última atualização, sem ler arquivo nem
+    # bater no GitHub. A raiz serviria, mas leria o HTML inteiro do disco a cada checagem.
+    healthCheckPath: /api/ping
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      # Dono e nome do repositório onde o painel guarda o estado — é este mesmo, e não é
+      # segredo nenhum. O app imprime os dois no boot, dá para conferir no log.
+      - key: GITHUB_USER
+        value: drmsolucoesempresariais-pixel
+      - key: GITHUB_REPO
+        value: licitacoes-data
+      # sync: false = o Render pergunta na hora de criar e guarda só lá. O token precisa
+      # de permissão de ESCRITA neste repositório: o painel grava o estado de volta nele.
+      - key: GITHUB_TOKEN
+        sync: false
