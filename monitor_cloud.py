@@ -68,10 +68,40 @@ class OneDriveClient:
     TOKEN_URL  = "https://login.microsoftonline.com/consumers/oauth2/v2.0/token"
     GRAPH_BASE = "https://graph.microsoft.com/v1.0"
 
+    # Onde o refresh token rotacionado é guardado entre reinícios. A Microsoft entrega um
+    # token novo a CADA renovação e mata o anterior; enquanto o novo só vivia na memória,
+    # todo restart voltava ao valor da variável de ambiente — que a rotação já tinha
+    # queimado. Foi assim que este painel subiu vazio depois da mudança de servidor: o
+    # token que estava na variável do Railway morrera meses antes, e o que estava vivo
+    # foi embora junto com o container.
+    TOKEN_FILE = Path(os.environ.get("DADOS_DIR", ".")) / "onedrive_token.txt"
+
     def __init__(self):
         self._access_token  = None
         self._token_expires = 0.0
-        self._refresh_token = AZURE_REFRESH_TOKEN   # rotaciona em memória a cada renovação
+        self._refresh_token = self._carregar_token() or AZURE_REFRESH_TOKEN
+
+    def _carregar_token(self) -> str:
+        """O token guardado vence o da variável — ele é o mais novo da cadeia. Exceto se a
+        variável tiver MUDADO: aí o gestor acabou de gerar um login novo, e é ela que vale."""
+        try:
+            guardado, _, origem = self.TOKEN_FILE.read_text(encoding="utf-8").partition("\n--origem--\n")
+            if origem.strip() == (AZURE_REFRESH_TOKEN or "").strip() and guardado.strip():
+                print("  [OneDrive] usando o token rotacionado que estava guardado.", flush=True)
+                return guardado.strip()
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            print(f"  [OneDrive] não consegui ler o token guardado: {e}", flush=True)
+        return ""
+
+    def _guardar_token(self, token: str) -> None:
+        try:
+            self.TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+            self.TOKEN_FILE.write_text(f"{token}\n--origem--\n{AZURE_REFRESH_TOKEN or ''}",
+                                       encoding="utf-8")
+        except Exception as e:
+            print(f"  [OneDrive] não consegui guardar o token: {e}", flush=True)
 
     def _refresh_access_token(self):
         """Troca o refresh_token por um novo access_token (e rotaciona o refresh_token)."""
@@ -87,8 +117,23 @@ class OneDriveClient:
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=15) as r:
-            tok = json.loads(r.read())
+        try:
+            with urllib.request.urlopen(req, timeout=15) as r:
+                tok = json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            # A Microsoft explica o motivo NO CORPO da resposta. Sem ler o corpo, o log
+            # dizia só "HTTP Error 400: Bad Request" — que não diz nada e manda a gente
+            # procurar no lugar errado. Quase sempre é invalid_grant: token vencido.
+            corpo = ""
+            try:
+                corpo = json.loads(e.read()).get("error_description", "")
+            except Exception:
+                pass
+            if "invalid_grant" in corpo or "AADSTS" in corpo:
+                raise RuntimeError(
+                    "O login do OneDrive venceu — gere um AZURE_REFRESH_TOKEN novo "
+                    f"(setup_auth.py) e atualize no servidor. Microsoft disse: {corpo[:200]}")
+            raise RuntimeError(f"Falha ao renovar token OneDrive (HTTP {e.code}): {corpo[:200] or e.reason}")
         if "access_token" not in tok:
             raise RuntimeError(f"Falha ao renovar token OneDrive: {tok.get('error_description', tok)}")
         self._access_token  = tok["access_token"]
@@ -96,6 +141,7 @@ class OneDriveClient:
         # Client público rotaciona o refresh_token a cada uso — guarda o mais novo.
         if tok.get("refresh_token"):
             self._refresh_token = tok["refresh_token"]
+            self._guardar_token(self._refresh_token)
 
     def _token(self) -> str:
         if not self._access_token or time.time() >= self._token_expires:

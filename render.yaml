@@ -20,7 +20,17 @@ services:
     # bater no GitHub. A raiz serviria, mas leria o HTML inteiro do disco a cada checagem.
     healthCheckPath: /api/ping
     autoDeploy: true
+    # Disco pequeno só para o token do OneDrive sobreviver a um deploy. Sem ele, a cada
+    # reinício o painel volta ao token da variável, que a rotação da Microsoft já queimou —
+    # e sobe vazio, com um "HTTP 400" no log que não explica nada. Foi o que aconteceu na
+    # mudança de servidor. Os dados em si continuam vindo do OneDrive e do GitHub.
+    disk:
+      name: dados
+      mountPath: /var/dados
+      sizeGB: 1
     envVars:
+      - key: DADOS_DIR
+        value: /var/dados
       - key: PYTHON_VERSION
         value: "3.12"
       # Dono e nome do repositório onde o painel guarda o estado — é este mesmo, e não é
