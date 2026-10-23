@@ -13,11 +13,14 @@ Variáveis de ambiente:
   GITHUB_USER          — usuário do repositório de dados
   GITHUB_REPO          — repositório de dados (default: licitacoes-data)
   CLAUDE_API_KEY       — (opcional) habilita análise inteligente com IA
+  ADMIN_KEY            — senha da tela /onedrive (reconectar a conta Microsoft)
+  PAINEL_KEY           — (opcional) senha do painel; vazia = painel aberto a quem tem a URL
 """
 
-import os, json, threading, re, sys, time, unicodedata
+import os, json, threading, re, sys, time, unicodedata, hmac
 from datetime import datetime, timezone, timedelta
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.cookies import SimpleCookie
 from pathlib import Path
 import urllib.request, urllib.error, urllib.parse, base64
 
@@ -38,6 +41,12 @@ CLAUDE_API_KEY       = os.environ.get("CLAUDE_API_KEY",       "")   # habilita a
 # painel, então sem senha definida a tela fica DESLIGADA — falha fechada de propósito:
 # o painel em si não tem login, e uma tela aberta deixaria qualquer um plugar a conta dele.
 ADMIN_KEY            = os.environ.get("ADMIN_KEY",            "")
+# Senha do painel. Vazia = painel aberto, como sempre foi — falha ABERTA de propósito,
+# ao contrário da tela /onedrive acima. Fechar sem a variável definida apagaria o painel
+# da equipe inteira no primeiro deploy, sem ninguém entender por quê; e aqui o estrago
+# possível é ver dado, não plugar uma conta Microsoft. Definida, vale para tudo menos
+# /api/ping (health check do Render) e /onedrive (que tem a senha própria, acima).
+PAINEL_KEY           = os.environ.get("PAINEL_KEY",           "")
 
 HTML_FILE        = Path(__file__).resolve().parent / "PAINEL DE LICITAÇÕES.html"
 REFRESH_INTERVAL = 30    # segundos entre scans do OneDrive
@@ -213,12 +222,47 @@ onedrive = OneDriveClient()
 class GitHubClient:
     API = "https://api.github.com"
 
+    # Já confirmamos que o token alcança o repositório? Só o "sim" fica guardado; o "não"
+    # é sempre reconferido, para o painel se curar sozinho quando o token for corrigido.
+    _repo_ok = False
+
     def _headers(self):
         return {
             "Authorization": f"token {GITHUB_TOKEN}",
             "Accept":        "application/vnd.github+json",
             "Content-Type":  "application/json",
         }
+
+    def repo_visivel(self, reconferir: bool = False) -> bool:
+        """O GITHUB_TOKEN alcança este repositório?
+
+        Isto existe por causa de um detalhe do GitHub: para repositório privado que o token
+        NÃO alcança, a resposta é 404 — não 403. Igualzinha a "este arquivo não existe".
+        Sem esta checagem, privar o repositório viraria meta.json vazio: o painel subiria
+        sem nenhuma edição manual, com cara de ter voltado ao modelo inicial, que foi
+        exatamente o susto da mudança de servidor. Com ela, o 404 de um arquivo só é aceito
+        como "não existe" quando o repositório em si responde.
+        """
+        if self._repo_ok and not reconferir:
+            return True
+        url = f"{self.API}/repos/{GITHUB_USER}/{GITHUB_REPO}"
+        try:
+            req = urllib.request.Request(url, headers=self._headers())
+            with urllib.request.urlopen(req, timeout=15) as r:
+                GitHubClient._repo_ok = True
+                return True
+        except Exception as e:
+            GitHubClient._repo_ok = False
+            print(f"  [GitHub] Sem acesso a {GITHUB_USER}/{GITHUB_REPO}: {e}", flush=True)
+            return False
+
+    def _erro_sem_acesso(self, filename: str) -> RuntimeError:
+        return RuntimeError(
+            f"o GITHUB_TOKEN não alcança {GITHUB_USER}/{GITHUB_REPO}. Se o repositório "
+            f"acabou de virar privado, o token precisa do escopo 'repo' (token clássico) "
+            f"ou deste repositório na lista dele (token fine-grained). "
+            f"Não vou tratar {filename} como vazio — o estado anterior fica de pé."
+        )
 
     def read_json(self, filename: str):
         url = f"{self.API}/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/{filename}"
@@ -229,6 +273,8 @@ class GitHubClient:
                 return json.loads(base64.b64decode(data["content"]).decode("utf-8"))
         except urllib.error.HTTPError as e:
             if e.code == 404:
+                if not self.repo_visivel(reconferir=True):
+                    raise self._erro_sem_acesso(filename) from e
                 return {}
             raise
         except Exception as e:
@@ -236,6 +282,10 @@ class GitHubClient:
             return {}
 
     def write_json(self, filename: str, data: dict):
+        # Sem este teste, token sem acesso dá 404 na busca do sha, PUT sem sha em arquivo
+        # existente e um "409 Conflict" que não explica nada a quem está no painel.
+        if not self.repo_visivel():
+            raise self._erro_sem_acesso(filename)
         url = f"{self.API}/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/{filename}"
         sha = None
         try:
@@ -1140,6 +1190,33 @@ async function ir(){
 
 
 # ════════════════════════════════════════════════════
+# TELA DE ENTRADA (senha do painel)
+# ════════════════════════════════════════════════════
+# Uma senha só, compartilhada pela equipe, guardada num cookie de um ano. Não é sistema de
+# usuários: é a tranca que faltava numa URL que, até aqui, mostrava a carteira de licitações
+# inteira para qualquer um que a recebesse encaminhada.
+_PAGINA_ENTRAR = """<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Painel de Licitações</title></head>
+<body style="margin:0;background:#141414;color:#f2f2f2;font-family:system-ui,-apple-system,sans-serif">
+<form method="POST" action="/entrar" style="max-width:380px;margin:14vh auto;padding:30px;
+     background:#1e1e1e;border:1px solid #383838;border-radius:14px">
+  <div style="font-size:2rem;margin-bottom:6px">🔒</div>
+  <div style="font-size:1.15rem;font-weight:600;margin-bottom:4px">Painel de Licitações</div>
+  <div style="font-size:.85rem;color:#8c8c8c;margin-bottom:20px">__AVISO__</div>
+  <input type="password" name="k" autocomplete="current-password" autofocus
+         placeholder="Senha" style="width:100%;box-sizing:border-box;padding:12px 14px;
+         font-size:1rem;background:#141414;color:#f2f2f2;border:1px solid #454545;
+         border-radius:9px;margin-bottom:12px">
+  <button type="submit" style="width:100%;padding:12px;font-size:1rem;font-weight:600;
+          background:#2f6f4f;color:#fff;border:0;border-radius:9px;cursor:pointer">Entrar</button>
+  <div style="font-size:.75rem;color:#6e6e6e;margin-top:16px;line-height:1.5">
+    Este aparelho fica lembrado por um ano. Se trocar de celular, é só entrar de novo.</div>
+</form></body></html>"""
+
+
+# ════════════════════════════════════════════════════
 # HTTP HANDLER
 # ════════════════════════════════════════════════════
 class Handler(BaseHTTPRequestHandler):
@@ -1159,8 +1236,81 @@ class Handler(BaseHTTPRequestHandler):
         q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
         return (q.get("k") or [""])[0] == ADMIN_KEY
 
+    @staticmethod
+    def _senha_confere(tentativa: str) -> bool:
+        """Comparação em tempo constante, em BYTES.
+
+        Em str, compare_digest levanta TypeError com qualquer caractere fora do ASCII — e
+        uma senha escolhida aqui vai ter acento mais vezes do que não. Em str isso derrubava
+        o handler com 500 e ninguém entrava.
+        """
+        return hmac.compare_digest(tentativa.encode("utf-8"), PAINEL_KEY.encode("utf-8"))
+
+    def _painel_ok(self) -> bool:
+        """Cookie do painel confere? Sem PAINEL_KEY definida, todo mundo entra (como antes)."""
+        if not PAINEL_KEY:
+            return True
+        bolacha = SimpleCookie(self.headers.get("Cookie", "")).get("painel")
+        if not bolacha:
+            return False
+        return self._senha_confere(urllib.parse.unquote(bolacha.value))
+
+    def _autorizado(self) -> bool:
+        """Cookie do painel OU a senha de admin na URL.
+
+        A segunda alternativa não é folga: é o que mantém a tela /onedrive funcionando do
+        celular sem passar pelo painel — o caminho que existe justamente para reconectar a
+        conta Microsoft quando ninguém tem PC à mão.
+        """
+        return self._painel_ok() or self._admin_ok()
+
+    def _https(self) -> bool:
+        return (self.headers.get("X-Forwarded-Proto") or "").lower() == "https"
+
+    def _tela_entrar(self, aviso: str = "Esta página é da equipe. Digite a senha para entrar."):
+        corpo = _PAGINA_ENTRAR.replace("__AVISO__", aviso).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type",   "text/html; charset=utf-8")
+        self.send_header("Content-Length", len(corpo))
+        self.send_header("Cache-Control",  "no-store")
+        self.end_headers()
+        self.wfile.write(corpo)
+
+    def _entrar_com(self, senha: str):
+        """Senha certa: cookie de um ano e vai para o painel. Errada: a mesma tela, avisando."""
+        if not PAINEL_KEY or (senha and self._senha_confere(senha)):
+            partes = [f"painel={urllib.parse.quote(PAINEL_KEY)}", "Path=/",
+                      "Max-Age=31536000", "HttpOnly", "SameSite=Lax"]
+            if self._https():
+                partes.append("Secure")
+            self.send_response(303)
+            self.send_header("Location",   "/")
+            self.send_header("Set-Cookie", "; ".join(partes))
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+        else:
+            self._tela_entrar("Senha incorreta. Tente de novo.")
+
     def do_GET(self):
         p = self.path.split("?")[0]
+
+        if p == "/entrar":
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            k = (q.get("k") or [""])[0]
+            # Link com a senha embutida: serve para passar o acesso para um colega uma vez
+            # (ele abre, o cookie fica, a senha não volta a trafegar). Sem k, mostra o campo.
+            self._entrar_com(k) if k else self._tela_entrar()
+            return
+
+        # /api/ping fica SEMPRE aberto: é o healthCheckPath do render.yaml. Fechado, o Render
+        # marcaria o serviço como doente e o reiniciaria em loop. Devolve só a hora da última
+        # atualização — nenhum dado de licitação sai por ali.
+        if p != "/api/ping" and not self._autorizado():
+            if p.startswith("/api/"):
+                self._json({"ok": False, "erro": "sessao", "entrar": "/entrar"}, status=401)
+            else:
+                self._tela_entrar()
+            return
 
         if p == "/onedrive":
             if not self._admin_ok():
@@ -1190,8 +1340,14 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"last_update": lu})
 
         elif p == "/api/config":
-            # Informa ao painel se a análise IA está disponível
-            self._json({"has_claude": bool(CLAUDE_API_KEY)})
+            # Informa ao painel se a análise IA está disponível, e se o repositório de
+            # estado responde — a segunda é para dar nome ao caso "o painel subiu sem as
+            # minhas edições" sem precisar abrir o log do servidor.
+            # Repete o que já se sabe, sem bater no GitHub: este servidor é de thread
+            # única, então uma chamada de até 15s aqui travaria o painel de todos a cada
+            # carregamento de página. Quem atualiza o indicador é o boot e o refresh.
+            self._json({"has_claude": bool(CLAUDE_API_KEY),
+                        "repo_ok":    GitHubClient._repo_ok})
 
         elif p == "/api/edital":
             self._serve_edital()
@@ -1243,6 +1399,15 @@ class Handler(BaseHTTPRequestHandler):
         p    = self.path.split("?")[0]
         n    = int(self.headers.get("Content-Length", 0))
         body = self.rfile.read(n)
+
+        if p == "/entrar":
+            campos = urllib.parse.parse_qs(body.decode("utf-8", "replace"))
+            self._entrar_com((campos.get("k") or [""])[0])
+            return
+
+        if not self._autorizado():
+            self._json({"ok": False, "erro": "sessao", "entrar": "/entrar"}, status=401)
+            return
 
         if p == "/api/onedrive/conectar":
             self._json(iniciar_device_code() if self._admin_ok()
@@ -1302,9 +1467,9 @@ class Handler(BaseHTTPRequestHandler):
             self.send_error(404)
 
     # ── helpers ──────────────────────────────────────────────────────────────
-    def _json(self, obj):
+    def _json(self, obj, status: int = 200):
         body = json.dumps(obj, ensure_ascii=False).encode("utf-8")
-        self.send_response(200)
+        self.send_response(status)
         self.send_header("Content-Type",   "application/json; charset=utf-8")
         self.send_header("Content-Length", len(body))
         self._cors()
@@ -1351,6 +1516,9 @@ if __name__ == "__main__":
     print(f"  OneDrive Folder: {ONEDRIVE_FOLDER_ID}")
     print(f"  Porta          : {PORT}")
     print(f"  Claude AI      : {'✅ Ativada' if CLAUDE_API_KEY else '⚠️  Desativada (sem CLAUDE_API_KEY)'}")
+    print(f"  Senha do painel: {'✅ Exigida' if PAINEL_KEY else '⚠️  ABERTO — quem tiver a URL vê tudo (defina PAINEL_KEY)'}")
+    print(f"  Repo do estado : {GITHUB_USER}/{GITHUB_REPO} — "
+          f"{'✅ acessível' if gh.repo_visivel() else '❌ FORA DE ALCANCE do GITHUB_TOKEN'}")
     print(f"  Refresh        : a cada {REFRESH_INTERVAL}s")
     print("  Carregando dados do OneDrive...", flush=True)
 
