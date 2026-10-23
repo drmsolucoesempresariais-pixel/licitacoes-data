@@ -79,6 +79,42 @@ Portais novos são detectados automaticamente: basta criar uma nova subpasta.
 O painel atualiza os dados do OneDrive a cada **2 minutos**.
 Se você ou um colega adicionar/mover uma pasta no OneDrive, a mudança aparece no painel em até 2 min.
 
+## Senha do painel
+
+O painel **não tinha login**: quem recebia a URL encaminhada via a carteira de licitações
+inteira — cidade, data da sessão, objeto e status de cada pregão.
+
+Agora, se a variável `PAINEL_KEY` estiver definida no servidor, o painel pede a senha uma
+vez por aparelho e lembra por um ano (cookie). Para passar o acesso a um colega, mande o
+link `https://SEU-PAINEL/entrar?k=A_SENHA` uma única vez: ele abre, fica lembrado, e a
+senha não precisa voltar a trafegar.
+
+Duas portas ficam de fora, de propósito:
+
+- `/api/ping` — é o health check do Render. Fechada, o Render marcaria o serviço como
+  doente e o reiniciaria em loop. Devolve só a hora da última atualização.
+- `/onedrive` — tem a senha própria (`ADMIN_KEY`), para reconectar a conta Microsoft do
+  celular sem precisar entrar no painel.
+
+**Sem `PAINEL_KEY` definida, o painel continua aberto como antes** — e avisa isso no log do
+servidor a cada boot. Preferimos isso a fechar sozinho: uma variável esquecida apagaria o
+painel da equipe inteira sem ninguém entender por quê.
+
+## Repositório privado
+
+Este repositório guarda o estado do painel (`state.json`, `meta.json`) — ou seja, dados da
+empresa. Ele deve ser **privado**.
+
+Um detalhe do GitHub torna isso delicado: para repositório privado que o token não alcança,
+a resposta é **404** — a mesma de "este arquivo não existe". Sem tratamento, privar o
+repositório faria o painel ler `meta.json` como vazio, subir sem nenhuma edição manual e
+parecer ter voltado ao modelo inicial.
+
+O painel agora confere o repositório antes de aceitar esse 404: se o token não alcança,
+ele **mantém o estado anterior**, recusa gravar e diz isso no log e em `/api/config`
+(`repo_ok: false`). Se você privar o repositório, o `GITHUB_TOKEN` precisa do escopo
+`repo` (token clássico) ou deste repositório na lista dele (token fine-grained).
+
 ## Edições manuais (status, observações, etc.)
 
 As edições feitas no painel são salvas no arquivo `meta.json` no repositório GitHub.
